@@ -1,0 +1,309 @@
+{
+	"info": {
+		"_postman_id": "235b19ba-69da-46a2-9dac-d42074eebf72",
+		"name": "Graduation Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41678699"
+	},
+	"item": [
+		{
+			"name": "Patient",
+			"item": [
+				{
+					"name": "Patient Registeration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"First_Name\": \"Taha\",\r\n  \"Last_Name\": \"Khalid\",\r\n  \"Gender\": \"Male\",\r\n  \"Birth_Date\": \"1997-04-01\",\r\n  \"Email_Address\": \"Taha@gmail.com\",\r\n  \"Phone_Number\": \"01136298290\",\r\n  \"Password\": \"pass_123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://strokeapp.runasp.net/api/Patients/Registration",
+							"protocol": "http",
+							"host": [
+								"strokeapp",
+								"runasp",
+								"net"
+							],
+							"path": [
+								"api",
+								"Patients",
+								"Registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKd3RTdWJqZWN0IiwianRpIjoiMWQ4YWU2OTQtNmY3MC00Mjk4LWI4ZDEtMGU5ZmZhYTNiZWJjIiwiUGF0aWVudF9JZCI6IjEiLCJFbWFpbF9BZGRyZXNzIjoibmFkZXJSYWdhYjU0QGdtYWlsLmNvbSIsImV4cCI6MTczODU3MTY0NSwiaXNzIjoiSnd0SXNzdWVyIiwiYXVkIjoiSnd0QXVkaWVuY2UifQ.quHgC-yNnKnWg_Io-yfiuuzHbviU4Y-YwPUEsnlNljg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Key",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzIJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email_Address\": \"john@gmail.com\",\r\n  \"Password\": \"pass_123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://strokeapp.runasp.net/api/Patients/Login",
+							"protocol": "http",
+							"host": [
+								"strokeapp",
+								"runasp",
+								"net"
+							],
+							"path": [
+								"api",
+								"Patients",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPatients",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKd3RTdWJqZWN0IiwianRpIjoiYzlhYjQzY2EtNWIwNS00YTU2LWE4ZjMtZTlmZTBkYjAxMjI3IiwiUGF0aWVudF9JZCI6IjEiLCJFbWFpbF9BZGRyZXNzIjoiam9obkBnbWFpbC5jb20iLCJleHAiOjE3Mzk2OTgzNjQsImlzcyI6Ikp3dElzc3VlciIsImF1ZCI6Ikp3dEF1ZGllbmNlIn0.Ruks1eqZwSqSAmb6nPTbbOr_q-ssHlSjIv5nYHyoO1c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7111/api/Patients/GetUsers",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7111",
+							"path": [
+								"api",
+								"Patients",
+								"GetUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patient By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKd3RTdWJqZWN0IiwianRpIjoiM2NiNDkzMzYtMzUyNy00NDIyLWE2MjQtMmZlZWEzOGUzODNjIiwiUGF0aWVudF9JZCI6IjEiLCJFbWFpbF9BZGRyZXNzIjoiam9obkBnbWFpbC5jb20iLCJleHAiOjE3Mzk3MjMyNzQsImlzcyI6Ikp3dElzc3VlciIsImF1ZCI6Ikp3dEF1ZGllbmNlIn0.XUm1aTD0PFevNp-zxIf61MjuBBfhNTRW0cY2Zh4eG-I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7111/api/Patients/GetUser/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7111",
+							"path": [
+								"api",
+								"Patients",
+								"GetUser",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePatientById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9eyJhbGciOiJIUzIJ9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7111/api/Patients/DeleteUser/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7111",
+							"path": [
+								"api",
+								"Patients",
+								"DeleteUser",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Patient By Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"first_Name\": \"string\",\r\n  \"last_Name\": \"string\",\r\n  \"gender\": \"string\",\r\n  \"birth_Date\": \"2025-02-16\",\r\n  \"email_Address\": \"string\",\r\n  \"phone_Number\": \"string\",\r\n  \"password\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7111/api/Patient/UpdateRegistration/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7111",
+							"path": [
+								"api",
+								"Patient",
+								"UpdateRegistration",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctor",
+			"item": [
+				{
+					"name": "Doctor Registration",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GetDoctors",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Doctor By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKd3RTdWJqZWN0IiwianRpIjoiOGRkYTQ4MmEtMDY1MC00ODQ5LTk5NzEtMWFiMzUyZDE2NWFmIiwiRG9jdG9yX0lkIjoiMSIsIkVtYWlsX0FkZHJlc3MiOiJhaG1lZG1haG1vdWRAZ21haWwuY29tIiwiZXhwIjoxNzM5Njk4OTE3LCJpc3MiOiJKd3RJc3N1ZXIiLCJhdWQiOiJKd3RBdWRpZW5jZSJ9.hzhfRoVc6-96o9MINWiFm8R7BYM0SgjcRfssbzNSoe4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://strokeapp.runasp.net/api/Doctor/GetDoctor/1",
+							"protocol": "http",
+							"host": [
+								"strokeapp",
+								"runasp",
+								"net"
+							],
+							"path": [
+								"api",
+								"Doctor",
+								"GetDoctor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Doctor",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Doctor By Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Updata Doctor By Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
