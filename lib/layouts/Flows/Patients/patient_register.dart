@@ -1,4 +1,5 @@
 import 'package:doctors/core/reusable_componants/custom_text_field.dart';
+import 'package:doctors/core/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class PatientRegister extends StatefulWidget {
@@ -53,8 +54,7 @@ class _PatientRegisterState extends State<PatientRegister> {
     TextEditingController lastNameController = TextEditingController();
     TextEditingController ageController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
-    TextEditingController majorController = TextEditingController();
-    TextEditingController addressController = TextEditingController();
+
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmPasswordController = TextEditingController();
@@ -157,28 +157,6 @@ class _PatientRegisterState extends State<PatientRegister> {
                   SizedBox(
                     height: height,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomTextFiled(
-                            hintText: "Major",
-                            keyboard: TextInputType.number,
-                            textController: majorController),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(
-                        child: CustomTextFiled(
-                            hintText: "Address",
-                            keyboard: TextInputType.number,
-                            textController: addressController),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: height,
-                  ),
                   CustomTextFiled(
                       hintText: "email",
                       keyboard: TextInputType.emailAddress,
@@ -205,7 +183,15 @@ class _PatientRegisterState extends State<PatientRegister> {
                   SizedBox(
                     height: height * 2.5,
                     child: FilledButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          Routes.homeScreenRouteName,
+                          (route) {
+                            return false;
+                          },
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff152238)),
                       child: const Text(

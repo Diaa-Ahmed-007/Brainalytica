@@ -1,4 +1,5 @@
 import 'package:doctors/core/reusable_componants/custom_text_field.dart';
+import 'package:doctors/core/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class DoctorRegister extends StatefulWidget {
@@ -77,147 +78,153 @@ class _DoctorRegisterState extends State<DoctorRegister> {
           style: TextStyle(color: Colors.white, fontSize: 30),
         ),
       ),
-      body: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            children: [
-              SizedBox(
-                height: height * 0.1,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextFiled(
-                        hintText: "First Name",
-                        keyboard: TextInputType.name,
-                        textController: firstNameController),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: CustomTextFiled(
-                        hintText: "last Name",
-                        keyboard: TextInputType.name,
-                        textController: lastNameController),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              CustomTextFiled(
-                  hintText: "Age",
-                  keyboard: TextInputType.number,
-                  textController: ageController),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: _openGenderSelection,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 14),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(_selectedGender ?? "Select Gender",
-                                style: const TextStyle(
-                                    color: Color(0xff152238),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500)),
-                            const Icon(Icons.arrow_drop_down),
-                          ],
-                        ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          children: [
+            SizedBox(
+              height: height * 0.1,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextFiled(
+                      hintText: "First Name",
+                      keyboard: TextInputType.name,
+                      textController: firstNameController),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: CustomTextFiled(
+                      hintText: "last Name",
+                      keyboard: TextInputType.name,
+                      textController: lastNameController),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            CustomTextFiled(
+                hintText: "Age",
+                keyboard: TextInputType.number,
+                textController: ageController),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: _openGenderSelection,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 14),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(_selectedGender ?? "Select Gender",
+                              style: const TextStyle(
+                                  color: Color(0xff152238),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500)),
+                          const Icon(Icons.arrow_drop_down),
+                        ],
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: CustomTextFiled(
-                        hintText: "phone number",
-                        keyboard: TextInputType.number,
-                        textController: phoneController),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextFiled(
-                        hintText: "Major",
-                        keyboard: TextInputType.name,
-                        textController: majorController),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    child: CustomTextFiled(
-                        hintText: "Address",
-                        keyboard: TextInputType.name,
-                        textController: addressController),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              CustomTextFiled(
-                  hintText: "email",
-                  keyboard: TextInputType.emailAddress,
-                  textController: emailController),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              CustomTextFiled(
-                  hintText: "password",
-                  keyboard: TextInputType.visiblePassword,
-                  obscureText: true,
-                  textController: passwordController),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              CustomTextFiled(
-                  hintText: "confirm password",
-                  keyboard: TextInputType.visiblePassword,
-                  obscureText: true,
-                  textController: confirmPasswordController),
-              SizedBox(
-                height: height * 0.1,
-              ),
-              SizedBox(
-                height: height * 0.08,
-                child: FilledButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff152238)),
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400),
-                  ),
                 ),
-              )
-            ],
-          ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: CustomTextFiled(
+                      hintText: "phone number",
+                      keyboard: TextInputType.number,
+                      textController: phoneController),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextFiled(
+                      hintText: "Major",
+                      keyboard: TextInputType.name,
+                      textController: majorController),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: CustomTextFiled(
+                      hintText: "Address",
+                      keyboard: TextInputType.name,
+                      textController: addressController),
+                )
+              ],
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            CustomTextFiled(
+                hintText: "email",
+                keyboard: TextInputType.emailAddress,
+                textController: emailController),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            CustomTextFiled(
+                hintText: "password",
+                keyboard: TextInputType.visiblePassword,
+                obscureText: true,
+                textController: passwordController),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            CustomTextFiled(
+                hintText: "confirm password",
+                keyboard: TextInputType.visiblePassword,
+                obscureText: true,
+                textController: confirmPasswordController),
+            SizedBox(
+              height: height * 0.1,
+            ),
+            SizedBox(
+              height: height * 0.08,
+              child: FilledButton(
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Routes.homeScreenRouteName,
+                    (route) {
+                      return false;
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff152238)),
+                child: const Text(
+                  'Sign Up',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
