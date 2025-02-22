@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class Themes {
   static ThemeData themeData = ThemeData(
+    scaffoldBackgroundColor: AppColors.primaryColor,
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primaryColor,
       primary: AppColors.primaryColor,

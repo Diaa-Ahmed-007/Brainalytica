@@ -2,6 +2,10 @@
 class Assets {
   Assets._();
   
+  /// Assets for assetsImagesAwarenessBackground
+  /// assets/images/awareness_background.png
+  static const String assetsImagesAwarenessBackground = "assets/images/awareness_background.png";
+
   /// Assets for assetsImagesFlowsBackground
   /// assets/images/flows_background.png
   static const String assetsImagesFlowsBackground = "assets/images/flows_background.png";

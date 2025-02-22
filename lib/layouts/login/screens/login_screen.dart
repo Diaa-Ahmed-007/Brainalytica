@@ -1,5 +1,6 @@
 import 'package:doctors/core/reusable_componants/custom_text_field.dart';
 import 'package:doctors/core/utils/assets.dart';
+import 'package:doctors/core/utils/routes.dart';
 import 'package:doctors/layouts/Flows/widgets/Custom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -56,7 +57,15 @@ class LoginScreen extends StatelessWidget {
                   width: width * 0.6,
                   child: CustomButton(
                     title: "Log In",
-                    ontap: () {},
+                    ontap: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        Routes.homeScreenRouteName,
+                        (route) {
+                          return false;
+                        },
+                      );
+                    },
                   ),
                 )
               ],
