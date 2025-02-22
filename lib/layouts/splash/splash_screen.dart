@@ -10,22 +10,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-   @override
+  @override
   void initState() {
     super.initState();
     _navigatetohome();
   }
-    _navigatetohome() async {
+
+  _navigatetohome() async {
     await Future.delayed(
       const Duration(seconds: 2),
       () {
         // checkAutoLogin();
 
-         Navigator.of(context).pushReplacementNamed(Routes.flowscreenRouteName);
-
+        Navigator.of(context).pushReplacementNamed(Routes.flowscreenRouteName);
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
         alignment: Alignment.center,
         children: [
           Image.asset(
-
             Assets.assetsImagesSplash,
-
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover,
