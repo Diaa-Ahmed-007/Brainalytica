@@ -20,7 +20,9 @@ class _SplashScreenState extends State<SplashScreen> {
       const Duration(seconds: 2),
       () {
         // checkAutoLogin();
+
          Navigator.of(context).pushReplacementNamed(Routes.flowscreenRouteName);
+
       },
     );
   }
@@ -32,7 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
         alignment: Alignment.center,
         children: [
           Image.asset(
+
             Assets.assetsImagesSplash,
+
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover,
