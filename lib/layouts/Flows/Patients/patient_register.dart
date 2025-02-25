@@ -14,6 +14,7 @@ class _PatientRegisterState extends State<PatientRegister> {
 
   void _openGenderSelection() {
     showModalBottomSheet(
+      backgroundColor: const Color(0xffADC5D0),
       context: context,
       builder: (context) {
         return Container(
@@ -134,9 +135,9 @@ class _PatientRegisterState extends State<PatientRegister> {
                               children: [
                                 Text(_selectedGender ?? "Select Gender",
                                     style: const TextStyle(
-                                        color: Color(0xff152238),
+                                        color: Colors.black45,
                                         fontSize: 20,
-                                        fontWeight: FontWeight.w500)),
+                                        fontWeight: FontWeight.w600)),
                                 const Icon(Icons.arrow_drop_down),
                               ],
                             ),

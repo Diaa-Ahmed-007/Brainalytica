@@ -5,15 +5,17 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.ontap,
+    this.color,
   });
   final String title;
   final Function() ontap;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return FilledButton(
       onPressed: ontap,
       style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.primary),
+          backgroundColor: color ?? Theme.of(context).colorScheme.primary),
       child: Text(
         title,
         style: const TextStyle(

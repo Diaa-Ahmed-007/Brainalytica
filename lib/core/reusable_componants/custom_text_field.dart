@@ -10,6 +10,7 @@ class CustomTextFiled extends StatelessWidget {
   bool? obscureText;
   Widget? suffixIcon;
   ValidationFieled validator;
+  Color? fillColor;
   CustomTextFiled({
     super.key,
     required this.hintText,
@@ -18,6 +19,7 @@ class CustomTextFiled extends StatelessWidget {
     this.obscureText = false,
     this.suffixIcon,
     this.validator,
+    this.fillColor,
   });
 
   @override
@@ -26,11 +28,9 @@ class CustomTextFiled extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: Color(0xff152238)),
+            color: Colors.black45, fontSize: 20, fontWeight: FontWeight.w600),
         suffixIcon: suffixIcon,
-        fillColor: Theme.of(context).colorScheme.onPrimary,
+        fillColor: fillColor ?? Theme.of(context).colorScheme.onPrimary,
         filled: true,
         disabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),

@@ -67,7 +67,9 @@ class HomeScreen extends StatelessWidget {
           ),
           CustomHomeButton(
             title: "patient",
-            ontap: () {},
+            ontap: () {
+              Navigator.pushNamed(context, Routes.patientScreenRouteName);
+            },
           )
         ],
       ),
