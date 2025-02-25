@@ -14,8 +14,16 @@ class Assets {
   /// assets/images/login_background.png
   static const String assetsImagesLoginBackground = "assets/images/login_background.png";
 
+  /// Assets for assetsImagesPatientScreenBackground
+  /// assets/images/patient_screen_background.png
+  static const String assetsImagesPatientScreenBackground = "assets/images/patient_screen_background.png";
+
   /// Assets for assetsImagesSplash
   /// assets/images/splash.png
   static const String assetsImagesSplash = "assets/images/splash.png";
+
+  /// Assets for assetsImagesXRayBackground
+  /// assets/images/xRay_background.png
+  static const String assetsImagesXRayBackground = "assets/images/xRay_background.png";
 }
 

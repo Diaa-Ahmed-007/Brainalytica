@@ -34,6 +34,7 @@ class FlowChooseScreen extends StatelessWidget {
                   },
                 ),
               ),
+              Text("sign up"),
               SizedBox(
                 height: height * 0.1,
               ),

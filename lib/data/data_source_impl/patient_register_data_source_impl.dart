@@ -13,7 +13,7 @@ class PatientRegisterDataSourceImpl extends PatientRegisterDataSource {
   @override
   Future<Either<PatientModel, String>> registerPatient() async {
     try {
-      var response = await apiManger.postRequest(
+      var response = await apiManger.postBackEndRequest(
           endPoints: EndPoints.patientRegisterEndPoint);
       PatientModel patientRegisterResponse =
           PatientModel.fromJson(response.data);
