@@ -110,7 +110,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
               height: height * 0.02,
             ),
             CustomTextFiled(
-                hintText: "Age",
+                hintText: "yyyy-mm-dd",
                 keyboard: TextInputType.number,
                 textController: ageController),
             SizedBox(

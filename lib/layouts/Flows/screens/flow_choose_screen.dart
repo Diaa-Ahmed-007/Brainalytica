@@ -23,6 +23,9 @@ class FlowChooseScreen extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: height * 0.1,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: width * 0.2),
                 height: height * 0.07,
@@ -34,9 +37,15 @@ class FlowChooseScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Text("sign up"),
               SizedBox(
-                height: height * 0.1,
+                height: height * 0.05,
+              ),
+              Text(
+                "Choose your flow",
+                style: TextStyle(color: Colors.white38, fontSize: 30),
+              ),
+              SizedBox(
+                height: height * 0.02,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
