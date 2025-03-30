@@ -28,6 +28,7 @@ class PatientRegisterDataSourceImpl extends PatientRegisterDataSource {
           PatientModel.fromJson(response.data);
       return Left(patientRegisterResponse);
     } catch (e) {
+      print(e.toString());
       return Right(e.toString());
     }
   }
