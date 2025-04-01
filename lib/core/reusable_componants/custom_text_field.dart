@@ -25,7 +25,9 @@ class CustomTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      
       decoration: InputDecoration(
+      
         hintText: hintText,
         hintStyle: const TextStyle(
             color: Colors.black45, fontSize: 20, fontWeight: FontWeight.w600),

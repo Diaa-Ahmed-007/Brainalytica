@@ -10,5 +10,6 @@ void main() {
   configureDependencies();
   Bloc.observer = MyBlocObserver();
   ApiManger.initAiModel();
+  ApiManger.initBackEnd();
   runApp(const MyApp());
 }
