@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:doctors/core/api/api_manger.dart';
 import 'package:doctors/core/api/end_points.dart';
+import 'package:doctors/core/api/exception_handling.dart';
 import 'package:doctors/data/data_source_contract/patient_register_data_source.dart';
-import 'package:doctors/data/models/patient_regester_model/PatientModel.dart';
+import 'package:doctors/data/models/patient_register_model/patient_register_model.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: PatientRegisterDataSource)
@@ -27,9 +29,11 @@ class PatientRegisterDataSourceImpl extends PatientRegisterDataSource {
       PatientModel patientRegisterResponse =
           PatientModel.fromJson(response.data);
       return Left(patientRegisterResponse);
-    } catch (e) {
-      print(e.toString());
-      return Right(e.toString());
-    }
+    } on DioException catch (e) {
+    String errorMessage = DioExceptionHandler.handleException(e);
+    return Right(errorMessage);
+  } catch (e) {
+    return Right(e.toString());
+  }
   }
 }

@@ -1,14 +1,15 @@
-class User {
-  User({
-      this.patientId, 
-      this.firstName, 
-      this.lastName, 
-      this.gender, 
-      this.birthDate, 
-      this.emailAddress, 
-      this.phoneNumber,});
+class Usermodel {
+  Usermodel({
+    this.patientId,
+    this.firstName,
+    this.lastName,
+    this.gender,
+    this.birthDate,
+    this.emailAddress,
+    this.phoneNumber,
+  });
 
-  User.fromJson(dynamic json) {
+  Usermodel.fromJson(dynamic json) {
     patientId = json['patient_Id'];
     firstName = json['first_Name'];
     lastName = json['last_Name'];
@@ -36,5 +37,4 @@ class User {
     map['phone_Number'] = phoneNumber;
     return map;
   }
-
 }

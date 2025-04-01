@@ -1,19 +1,20 @@
-import 'User.dart';
+import 'user_model.dart';
 
 class PatientModel {
   PatientModel({
-      this.success, 
-      this.message, 
-      this.user,});
+    this.success,
+    this.message,
+    this.user,
+  });
 
   PatientModel.fromJson(dynamic json) {
     success = json['success'];
     message = json['message'];
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    user = json['user'] != null ? Usermodel.fromJson(json['user']) : null;
   }
   bool? success;
   String? message;
-  User? user;
+  Usermodel? user;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -24,5 +25,4 @@ class PatientModel {
     }
     return map;
   }
-
 }
