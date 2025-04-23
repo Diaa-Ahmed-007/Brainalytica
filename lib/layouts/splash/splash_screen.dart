@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         // checkAutoLogin();
 
-        Navigator.of(context).pushReplacementNamed(Routes.flowscreenRouteName);
+        Navigator.of(context).pushReplacementNamed(Routes.homeScreenRouteName);
       },
     );
   }

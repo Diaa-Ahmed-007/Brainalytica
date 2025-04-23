@@ -94,7 +94,7 @@ class _PatientRegisterState extends State<PatientRegister> {
                       Row(
                         children: [
                           Expanded(
-                            child: CustomTextFiled(
+                            child: CustomTextField(
                               hintText: "First Name",
                               keyboard: TextInputType.name,
                               textController: firstNameController,
@@ -105,7 +105,7 @@ class _PatientRegisterState extends State<PatientRegister> {
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: CustomTextFiled(
+                            child: CustomTextField(
                               hintText: "Last Name",
                               keyboard: TextInputType.name,
                               textController: lastNameController,
@@ -117,7 +117,7 @@ class _PatientRegisterState extends State<PatientRegister> {
                         ],
                       ),
                       SizedBox(height: height),
-                      CustomTextFiled(
+                      CustomTextField(
                         hintText: "yyyy-mm-dd",
                         keyboard: TextInputType.number,
                         textController: ageController,
@@ -130,7 +130,7 @@ class _PatientRegisterState extends State<PatientRegister> {
                           GenderChoose(),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: CustomTextFiled(
+                            child: CustomTextField(
                               hintText: "Phone Number",
                               keyboard: TextInputType.number,
                               textController: phoneController,
@@ -146,7 +146,7 @@ class _PatientRegisterState extends State<PatientRegister> {
                         ],
                       ),
                       SizedBox(height: height),
-                      CustomTextFiled(
+                      CustomTextField(
                         hintText: "Email",
                         keyboard: TextInputType.emailAddress,
                         textController: emailController,
@@ -156,7 +156,7 @@ class _PatientRegisterState extends State<PatientRegister> {
                                 : null,
                       ),
                       SizedBox(height: height),
-                      CustomTextFiled(
+                      CustomTextField(
                         hintText: "Password",
                         keyboard: TextInputType.visiblePassword,
                         obscureText: true,
@@ -166,7 +166,7 @@ class _PatientRegisterState extends State<PatientRegister> {
                             : null,
                       ),
                       SizedBox(height: height),
-                      CustomTextFiled(
+                      CustomTextField(
                         hintText: "Confirm Password",
                         keyboard: TextInputType.visiblePassword,
                         obscureText: true,

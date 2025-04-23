@@ -3,50 +3,86 @@ import 'package:doctors/core/utils/assets.dart';
 import 'package:doctors/core/utils/dialogs.dart';
 import 'package:doctors/core/utils/routes.dart';
 import 'package:doctors/layouts/Flows/widgets/Custom_button.dart';
+import 'package:doctors/layouts/login/view_model/doctor_login_view_model.dart';
+import 'package:doctors/layouts/login/view_model/doctor_login_view_model_state.dart';
 import 'package:doctors/layouts/login/view_model/patient_login_view_model.dart';
 import 'package:doctors/layouts/login/view_model/patient_login_view_model_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String selectedUserType = 'Patient';
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-    return BlocListener<PatientLoginViewModel, PatientLoginViewModelState>(
-      listenWhen: (previous, current) =>
-          current is PatientLoginViewModelSuccessState ||
-          current is PatientLoginViewModelErrorState ||
-          current is PatientLoginViewModelLoadingState,
-      listener: (context, state) {
-        if (state is PatientLoginViewModelLoadingState) {
-          CustomDialogs.showLoadingDialog(context);
-        } else {
-          CustomDialogs.closeDialogs(context);
-          if (state is PatientLoginViewModelSuccessState) {
-            CustomDialogs.showSuccessDialog(
-              context,
-              "Login Successfully!",
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  Routes.homeScreenRouteName,
-                  (route) => false,
-                );
-              },
-            );
-          } else if (state is PatientLoginViewModelErrorState) {
-            CustomDialogs.showErrorDialog(context, state.errorMessage);
-          }
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PatientLoginViewModel, PatientLoginViewModelState>(
+          listener: (context, state) {
+            if (state is PatientLoginViewModelLoadingState) {
+              CustomDialogs.showLoadingDialog(context);
+            } else {
+              CustomDialogs.closeDialogs(context);
+            }
+
+            if (state is PatientLoginViewModelSuccessState) {
+              CustomDialogs.showSuccessDialog(
+                context,
+                "Login Successfully!",
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Routes.homeScreenRouteName,
+                    (route) => false,
+                  );
+                },
+              );
+            } else if (state is PatientLoginViewModelErrorState) {
+              CustomDialogs.showErrorDialog(context, state.errorMessage);
+            }
+          },
+        ),
+        BlocListener<DoctorLoginViewModel, DoctorLoginViewModelState>(
+          listener: (context, state) {
+            if (state is DoctorLoginViewModelLoadingState) {
+              CustomDialogs.showLoadingDialog(context);
+            } else {
+              CustomDialogs.closeDialogs(context);
+            }
+
+            if (state is DoctorLoginViewModelSuccessState) {
+              CustomDialogs.showSuccessDialog(
+                context,
+                "Login Successfully!",
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Routes.homeScreenRouteName,
+                    (route) => false,
+                  );
+                },
+              );
+            } else if (state is DoctorLoginViewModelErrorState) {
+              CustomDialogs.showErrorDialog(context, state.error);
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
@@ -57,14 +93,12 @@ class LoginScreen extends StatelessWidget {
               height: double.infinity,
               fit: BoxFit.cover,
             ),
-            Container(
-              padding: EdgeInsets.only(top: height * 0.03),
+            Positioned(
+              top: height * 0.03,
+              left: width * 0.02,
               child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back_ios_new),
-                color: Colors.white,
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
               ),
             ),
             Padding(
@@ -74,7 +108,29 @@ class LoginScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomTextFiled(
+                    // Switch between Patient and Doctor
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ChoiceChip(
+                          label: const Text("Patient"),
+                          selected: selectedUserType == 'Patient',
+                          onSelected: (selected) {
+                            setState(() => selectedUserType = 'Patient');
+                          },
+                        ),
+                        const SizedBox(width: 16),
+                        ChoiceChip(
+                          label: const Text("Doctor"),
+                          selected: selectedUserType == 'Doctor',
+                          onSelected: (selected) {
+                            setState(() => selectedUserType = 'Doctor');
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    CustomTextField(
                       hintText: 'Email',
                       keyboard: TextInputType.emailAddress,
                       textController: emailController,
@@ -84,7 +140,7 @@ class LoginScreen extends StatelessWidget {
                               : null,
                     ),
                     SizedBox(height: height * 0.03),
-                    CustomTextFiled(
+                    CustomTextField(
                       hintText: 'Password',
                       keyboard: TextInputType.visiblePassword,
                       textController: passwordController,
@@ -92,22 +148,26 @@ class LoginScreen extends StatelessWidget {
                           ? "Password must be at least 6 characters"
                           : null,
                     ),
-                    SizedBox(
-                      height: height * 0.12,
-                    ),
+                    SizedBox(height: height * 0.12),
                     SizedBox(
                       height: height * 0.07,
                       width: width * 0.6,
                       child: CustomButton(
                         title: "Log In",
                         ontap: () {
+                          FocusScope.of(context).unfocus(); // dismiss keyboard
                           if (formKey.currentState!.validate()) {
-                            PatientLoginViewModel loginViewModel =
-                                PatientLoginViewModel.get(context);
-                            loginViewModel.patientLogin(
-                              emailAddress: emailController.text,
-                              password: passwordController.text,
-                            );
+                            if (selectedUserType == 'Patient') {
+                              PatientLoginViewModel.get(context).patientLogin(
+                                emailAddress: emailController.text,
+                                password: passwordController.text,
+                              );
+                            } else {
+                              DoctorLoginViewModel.get(context).doctorLogin(
+                                emailAddress: emailController.text,
+                                password: passwordController.text,
+                              );
+                            }
                           }
                         },
                       ),

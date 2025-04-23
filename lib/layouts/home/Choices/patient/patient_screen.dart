@@ -53,7 +53,7 @@ class PatientScreen extends StatelessWidget {
                 SizedBox(
                   height: height * 0.1,
                 ),
-                CustomTextFiled(
+                CustomTextField(
                   hintText: 'Age',
                   keyboard: TextInputType.number,
                   textController: ageController,
@@ -61,7 +61,7 @@ class PatientScreen extends StatelessWidget {
                 SizedBox(
                   height: height * 0.04,
                 ),
-                CustomTextFiled(
+                CustomTextField(
                   hintText: 'weight',
                   keyboard: TextInputType.number,
                   textController: weightController,
@@ -69,7 +69,7 @@ class PatientScreen extends StatelessWidget {
                 SizedBox(
                   height: height * 0.04,
                 ),
-                CustomTextFiled(
+                CustomTextField(
                   hintText: 'Pharmaceutical',
                   keyboard: TextInputType.name,
                   textController: pharmaceuticalController,
@@ -77,7 +77,7 @@ class PatientScreen extends StatelessWidget {
                 SizedBox(
                   height: height * 0.04,
                 ),
-                CustomTextFiled(
+                CustomTextField(
                   hintText: 'chronic diseases',
                   keyboard: TextInputType.name,
                   textController: chronicDiseasesController,

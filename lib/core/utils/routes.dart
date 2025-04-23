@@ -5,6 +5,8 @@ import 'package:doctors/layouts/Flows/Patients/view_model/sign_up_view_model.dar
 import 'package:doctors/layouts/Flows/doctors/doctor_register.dart';
 import 'package:doctors/layouts/Flows/screens/flow_choose_screen.dart';
 import 'package:doctors/layouts/home/Choices/Awareness/awareness_screen.dart';
+import 'package:doctors/layouts/home/Choices/Doctors/doctors_screen.dart';
+import 'package:doctors/layouts/home/Choices/Doctors/view_model/all_doctors_view_model.dart';
 import 'package:doctors/layouts/home/Choices/Exercises/execieses_screen.dart';
 import 'package:doctors/layouts/home/Choices/patient/Xray/view_model/xray_view_model.dart';
 import 'package:doctors/layouts/home/Choices/patient/Xray/xRay_screen.dart';
@@ -13,6 +15,7 @@ import 'package:doctors/layouts/home/Choices/patient/provider/save_xray_results_
 import 'package:doctors/layouts/home/Choices/patient/provider/upload_provider.dart';
 import 'package:doctors/layouts/home/screens/home_screen.dart';
 import 'package:doctors/layouts/login/screens/login_screen.dart';
+import 'package:doctors/layouts/login/view_model/doctor_login_view_model.dart';
 import 'package:doctors/layouts/login/view_model/patient_login_view_model.dart';
 import 'package:doctors/layouts/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +26,15 @@ class Routes {
   static Map<String, Widget Function(BuildContext)> routes = {
     splashRouteName: (context) => const SplashScreen(),
     flowscreenRouteName: (context) => const FlowChooseScreen(),
-    loginScreenRouteName: (context) => BlocProvider(
-          create: (context) => getIt<PatientLoginViewModel>(),
+    loginScreenRouteName: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider<PatientLoginViewModel>(
+              create: (context) => getIt<PatientLoginViewModel>(),
+            ),
+            BlocProvider<DoctorLoginViewModel>(
+              create: (context) => getIt<DoctorLoginViewModel>(),
+            ),
+          ],
           child: const LoginScreen(),
         ),
     patientRegisterRouteName: (context) => BlocProvider(
@@ -49,7 +59,12 @@ class Routes {
             child: XrayScreen(),
           ),
         ),
+    doctorScreenRouteName: (context) => BlocProvider(
+      create: (context) => getIt<AllDoctorsViewModel>()..getAllDoctors(),
+      child: const DoctorsScreen(),
+    ),
   };
+
 //------------------------------------------------------------------
   static const String splashRouteName = "splashScreen";
   static const String flowscreenRouteName = "flowscreen";
@@ -61,4 +76,5 @@ class Routes {
   static const String awarenessScreenRouteName = "AwarenessScreen";
   static const String patientScreenRouteName = "PatientScreen";
   static const String xrayScreenRouteName = "XrayScreen";
+  static const String doctorScreenRouteName = "DoctorScreen";
 }

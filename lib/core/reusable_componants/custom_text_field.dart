@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 typedef ValidationFieled = String? Function(String?)?;
 
 // ignore: must_be_immutable
-class CustomTextFiled extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   String hintText;
   TextInputType keyboard;
   TextEditingController textController;
@@ -11,7 +11,7 @@ class CustomTextFiled extends StatelessWidget {
   Widget? suffixIcon;
   ValidationFieled validator;
   Color? fillColor;
-  CustomTextFiled({
+  CustomTextField({
     super.key,
     required this.hintText,
     required this.keyboard,
@@ -25,9 +25,7 @@ class CustomTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
       decoration: InputDecoration(
-      
         hintText: hintText,
         hintStyle: const TextStyle(
             color: Colors.black45, fontSize: 20, fontWeight: FontWeight.w600),

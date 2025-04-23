@@ -5,26 +5,26 @@ import 'package:dio/dio.dart';
 import 'package:doctors/core/api/api_manger.dart';
 import 'package:doctors/core/api/end_points.dart';
 import 'package:doctors/core/api/exception_handling.dart';
-import 'package:doctors/data/data_source_contract/patient_login_data_source.dart';
-import 'package:doctors/data/models/patient_login_model/patient_login_model.dart';
+import 'package:doctors/data/data_source_contract/doctor/doctor_login_data_source.dart';
+import 'package:doctors/data/models/doctor_register_model/DoctorLoginModel.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: PatientLoginDataSource)
-class PatientLoginDataSourceImpl extends PatientLoginDataSource {
+@Injectable(as: DoctorLoginDataSource)
+class DoctorLoginDataSourceImpl extends DoctorLoginDataSource {
   ApiManger apiManger;
   @factoryMethod
-  PatientLoginDataSourceImpl(this.apiManger);
+  DoctorLoginDataSourceImpl(this.apiManger);
   @override
-  Future<Either<PatientLoginModel, String>> patientLogin(
+  Future<Either<DoctorLoginModel, String>> doctorLogin(
       {required String emailAddress, required String password}) async {
     try {
       var response = await apiManger.postBackEndRequest(
-          endPoints: EndPoints.patientLoginEndPoint,
+          endPoints: EndPoints.doctorLoginEndPoint,
           body: {"Email_Address": emailAddress, "Password": password});
-      PatientLoginModel patientLoginResponse =
-          PatientLoginModel.fromJson(response.data);
-      log(patientLoginResponse.token ?? "");
-      return Left(patientLoginResponse);
+      DoctorLoginModel doctorLoginModel =
+          DoctorLoginModel.fromJson(response.data);
+      log(doctorLoginModel.token ?? "");
+      return Left(doctorLoginModel);
     } on DioException catch (e) {
       String errorMessage = DioExceptionHandler.handleException(e);
       log("1$errorMessage");
