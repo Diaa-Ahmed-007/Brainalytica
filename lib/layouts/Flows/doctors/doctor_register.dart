@@ -90,7 +90,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
             Row(
               children: [
                 Expanded(
-                  child: CustomTextFiled(
+                  child: CustomTextField(
                       hintText: "First Name",
                       keyboard: TextInputType.name,
                       textController: firstNameController),
@@ -99,7 +99,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
                   width: 8,
                 ),
                 Expanded(
-                  child: CustomTextFiled(
+                  child: CustomTextField(
                       hintText: "last Name",
                       keyboard: TextInputType.name,
                       textController: lastNameController),
@@ -109,8 +109,8 @@ class _DoctorRegisterState extends State<DoctorRegister> {
             SizedBox(
               height: height * 0.02,
             ),
-            CustomTextFiled(
-                hintText: "Age",
+            CustomTextField(
+                hintText: "yyyy-mm-dd",
                 keyboard: TextInputType.number,
                 textController: ageController),
             SizedBox(
@@ -147,7 +147,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
                   width: 8,
                 ),
                 Expanded(
-                  child: CustomTextFiled(
+                  child: CustomTextField(
                       hintText: "phone number",
                       keyboard: TextInputType.number,
                       textController: phoneController),
@@ -160,7 +160,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
             Row(
               children: [
                 Expanded(
-                  child: CustomTextFiled(
+                  child: CustomTextField(
                       hintText: "Major",
                       keyboard: TextInputType.name,
                       textController: majorController),
@@ -169,7 +169,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
                   width: 8,
                 ),
                 Expanded(
-                  child: CustomTextFiled(
+                  child: CustomTextField(
                       hintText: "Address",
                       keyboard: TextInputType.name,
                       textController: addressController),
@@ -179,14 +179,14 @@ class _DoctorRegisterState extends State<DoctorRegister> {
             SizedBox(
               height: height * 0.02,
             ),
-            CustomTextFiled(
+            CustomTextField(
                 hintText: "email",
                 keyboard: TextInputType.emailAddress,
                 textController: emailController),
             SizedBox(
               height: height * 0.02,
             ),
-            CustomTextFiled(
+            CustomTextField(
                 hintText: "password",
                 keyboard: TextInputType.visiblePassword,
                 obscureText: true,
@@ -194,7 +194,7 @@ class _DoctorRegisterState extends State<DoctorRegister> {
             SizedBox(
               height: height * 0.02,
             ),
-            CustomTextFiled(
+            CustomTextField(
                 hintText: "confirm password",
                 keyboard: TextInputType.visiblePassword,
                 obscureText: true,

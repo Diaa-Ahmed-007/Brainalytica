@@ -35,7 +35,9 @@ class HomeScreen extends StatelessWidget {
           ),
           CustomHomeButton(
             title: "DOCTORS",
-            ontap: () {},
+            ontap: () {
+              Navigator.pushNamed(context, Routes.doctorScreenRouteName);
+            },
           ),
           SizedBox(
             height: height * 0.04,
