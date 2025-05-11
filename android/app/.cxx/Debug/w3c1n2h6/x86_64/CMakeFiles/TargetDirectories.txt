@@ -1,0 +1,2 @@
+D:/Flutter/work/Brainalytica/android/app/.cxx/Debug/w3c1n2h6/x86_64/CMakeFiles/edit_cache.dir
+D:/Flutter/work/Brainalytica/android/app/.cxx/Debug/w3c1n2h6/x86_64/CMakeFiles/rebuild_cache.dir
