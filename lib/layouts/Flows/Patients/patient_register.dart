@@ -47,7 +47,6 @@ class _PatientRegisterState extends State<PatientRegister> {
         } else {
           CustomDialogs.closeDialogs(context);
           if (state is PatientRegisterViewModelSuccessState) {
-            log(state.patientModel.message.toString());
             CustomDialogs.showSuccessDialog(
                 context, "Account created successfully!");
             Future.delayed(

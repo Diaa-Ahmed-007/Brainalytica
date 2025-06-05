@@ -1,23 +1,22 @@
-import 'package:doctors/data/models/patient_register_model/user_model.dart';
+import 'User.dart';
 
 class PatientLoginModel {
   PatientLoginModel({
-    this.success,
-    this.message,
-    this.token,
-    this.user,
-  });
+      this.success, 
+      this.message, 
+      this.token, 
+      this.user,});
 
   PatientLoginModel.fromJson(dynamic json) {
     success = json['success'];
     message = json['message'];
     token = json['token'];
-    user = json['user'] != null ? Usermodel.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
   bool? success;
   String? message;
   String? token;
-  Usermodel? user;
+  User? user;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -29,4 +28,5 @@ class PatientLoginModel {
     }
     return map;
   }
+
 }

@@ -6,7 +6,7 @@ import 'package:doctors/core/api/api_manger.dart';
 import 'package:doctors/core/api/end_points.dart';
 import 'package:doctors/core/api/exception_handling.dart';
 import 'package:doctors/data/data_source_contract/doctor/doctor_login_data_source.dart';
-import 'package:doctors/data/models/doctor_register_model/DoctorLoginModel.dart';
+import 'package:doctors/data/models/doctor_register_model/doctor_login_model.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: DoctorLoginDataSource)
