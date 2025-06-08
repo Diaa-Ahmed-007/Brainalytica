@@ -16,15 +16,33 @@ class PatientDataSourceimpl extends PatientDataSource {
   @override
   Future<Either<AddPatientDateModel, String>> addPatientData(
       {required bool hadStroke,
-      required DateTime strokeInjuryDate,
+      required String strokeInjuryDate,
       required double weight,
       required String bloodType,
       required bool bloodTransfusion,
-      required bool pharmaceutical,
+      required String pharmaceutical,
       required String chronicDiseases,
-      required bool hadSurgery}) {
-    // TODO: implement addPatientData
-    throw UnimplementedError();
+      required bool hadSurgery,
+      required int patientId}) async {
+    try {
+      var response = await apiManger.postBackEndRequest(
+          endPoints: EndPoints.addPatientEndPoint(patientId: patientId),
+          body: {
+            "Had_Stroke": hadStroke,
+            "StrokeInjury_Date": strokeInjuryDate,
+            "Weight": weight,
+            "Blood_Type": bloodType,
+            "Blood_Transfusion": bloodTransfusion,
+            "Pharmaceutical": pharmaceutical,
+            "Chronic_Diseases": chronicDiseases,
+            "Had_Surgery": hadSurgery
+          });
+      AddPatientDateModel addPatientDateModel =
+          AddPatientDateModel.fromJson(response.data);
+      return Left(addPatientDateModel);
+    } catch (e) {
+      return Right(e.toString());
+    }
   }
 
   @override

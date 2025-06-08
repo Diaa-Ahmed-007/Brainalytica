@@ -7,12 +7,15 @@ import 'package:doctors/layouts/Flows/screens/flow_choose_screen.dart';
 import 'package:doctors/layouts/home/Choices/Awareness/awareness_screen.dart';
 import 'package:doctors/layouts/home/Choices/Doctors/doctors_screen.dart';
 import 'package:doctors/layouts/home/Choices/Doctors/view_model/all_doctors_view_model.dart';
+import 'package:doctors/layouts/home/Choices/Emergancy/emergancy_screen.dart';
+import 'package:doctors/layouts/home/Choices/Emergancy/view_model/add_emergancy_view_model.dart';
 import 'package:doctors/layouts/home/Choices/Exercises/execieses_screen.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/xray_view_model.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/xRay_screen.dart';
 import 'package:doctors/layouts/home/Choices/add_data/init_patient_data_screen.dart';
 import 'package:doctors/layouts/home/Choices/add_data/provider/save_xray_results_provider.dart';
 import 'package:doctors/layouts/home/Choices/add_data/provider/upload_provider.dart';
+import 'package:doctors/layouts/home/Choices/add_data/view_model/add_patient_data_view_model.dart';
 import 'package:doctors/layouts/home/Choices/patient/all_patient_screen.dart';
 import 'package:doctors/layouts/home/Choices/patient/view_model/all_patient_view_model.dart';
 import 'package:doctors/layouts/home/screens/home_screen.dart';
@@ -49,7 +52,10 @@ class Routes {
     homeScreenRouteName: (context) => const HomeScreen(),
     exercisesScreenRouteName: (context) => const ExeciesesScreen(),
     awarenessScreenRouteName: (context) => const AwarenessScreen(),
-    initPatientDateScreenRouteName: (context) => const InitPatientDateScreen(),
+    initPatientDateScreenRouteName: (context) => BlocProvider(
+          create: (context) => getIt<AddPatientDataViewModel>(),
+          child: const InitPatientDateScreen(),
+        ),
     xrayScreenRouteName: (context) => MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => UploadProvider()),
@@ -65,10 +71,14 @@ class Routes {
           create: (context) => getIt<AllDoctorsViewModel>()..getAllDoctors(),
           child: const DoctorsScreen(),
         ),
-        patientScreenRouteName: (context) => BlocProvider(
+    patientScreenRouteName: (context) => BlocProvider(
           create: (context) => getIt<AllPatientsViewModel>()..getAllPatients(),
           child: const AllPatientScreen(),
-        )
+        ),
+    emergeancyScreenRouteName: (context) => BlocProvider(
+          create: (context) => getIt<AddEmergancyViewModel>(),
+          child: const EmergancyScreen(),
+        ),
   };
 
 //------------------------------------------------------------------
@@ -85,4 +95,5 @@ class Routes {
   static const String xrayScreenRouteName = "XrayScreen";
   static const String doctorScreenRouteName = "DoctorScreen";
   static const String patientScreenRouteName = "PatientScreen";
+  static const String emergeancyScreenRouteName = "EmergencyScreen";
 }

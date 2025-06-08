@@ -12,6 +12,7 @@ class AllPatientScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Patients Records"),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       body: BlocBuilder<AllPatientsViewModel, AllPatientsViewModelState>(
         builder: (context, state) {

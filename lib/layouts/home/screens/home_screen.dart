@@ -100,7 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(height: height * 0.04),
           CustomHomeButton(
             title: "Emergancy",
-            ontap: () {},
+            ontap: () {
+              Navigator.pushNamed(context, Routes.emergeancyScreenRouteName,arguments: patient);
+            },
           ),
           Visibility(
               visible: doctor == null, child: SizedBox(height: height * 0.04)),
@@ -110,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: "add my data",
               ontap: () {
                 Navigator.pushNamed(
-                    context, Routes.initPatientDateScreenRouteName);
+                    context, Routes.initPatientDateScreenRouteName,arguments: patient);
               },
             ),
           ),

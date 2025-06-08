@@ -9,13 +9,13 @@ abstract class PatientDataSource {
   Future<Either<PatientByIdModel, String>> getPatientById({required int id});
   Future<Either<AddPatientDateModel, String>> addPatientData(
       {required bool hadStroke,
-      required DateTime strokeInjuryDate,
+      required String strokeInjuryDate,
       required double weight,
       required String bloodType,
       required bool bloodTransfusion,
-      required bool pharmaceutical,
+      required String pharmaceutical,
       required String chronicDiseases,
-      required bool hadSurgery});
+      required bool hadSurgery,required int patientId});
   Future<Either<DeletePatientDataModel, String>> deletePatient(
       {required int id});
 }
