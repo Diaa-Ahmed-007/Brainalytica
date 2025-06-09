@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doctors/core/reusable_componants/custom_text_field.dart';
 import 'package:doctors/core/utils/assets.dart';
 import 'package:doctors/core/utils/routes.dart';
@@ -78,6 +80,7 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
             ),
           );
         } else if (state is AddPatientDataViewModelErrorState) {
+          log(state.errorMessage);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Error: ${state.errorMessage}")),
           );
@@ -312,22 +315,24 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                     // Submit
                     InkWell(
                       onTap: () {
-                        context.read<AddPatientDataViewModel>().addPatientData(
-                              weight:
-                                  double.parse(weightController.text) ?? 50.0,
-                              pharmaceutical: pharmaceuticalController.text,
-                              chronicDiseases: chronicDiseasesController.text,
-                              hadStroke: hadStroke,
-                              strokeInjuryDate:
-                                  (strokeInjuryDate ?? DateTime.now())
-                                      .toIso8601String()
-                                      .split('T')
-                                      .first,
-                              bloodType: selectedBloodType ?? "O+",
-                              bloodTransfusion: bloodTransfusion,
-                              hadSurgery: hadSurgery,
-                              patientId: patient.user?.patientId?.toInt() ?? 0,
-                            );
+                        // context.read<AddPatientDataViewModel>().addPatientData(
+                        //       weight:
+                        //           double.parse(weightController.text) ?? 50.0,
+                        //       pharmaceutical: pharmaceuticalController.text,
+                        //       chronicDiseases: chronicDiseasesController.text,
+                        //       hadStroke: hadStroke,
+                        //       strokeInjuryDate:
+                        //           (strokeInjuryDate ?? DateTime.now())
+                        //               .toIso8601String()
+                        //               .split('T')
+                        //               .first,
+                        //       bloodType: selectedBloodType ?? "O+",
+                        //       bloodTransfusion: bloodTransfusion,
+                        //       hadSurgery: hadSurgery,
+                        //       patientId: patient.user?.patientId?.toInt() ?? 0,
+                        //     );
+                        Navigator.pushReplacementNamed(
+                            context, Routes.xrayScreenRouteName);
                       },
                       child: Container(
                         height: height * 0.1,

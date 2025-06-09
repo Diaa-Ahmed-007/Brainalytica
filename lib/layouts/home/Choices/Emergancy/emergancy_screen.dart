@@ -1,6 +1,5 @@
 import 'package:doctors/core/reusable_componants/custom_text_field.dart';
 import 'package:doctors/core/utils/assets.dart';
-import 'package:doctors/core/utils/routes.dart';
 import 'package:doctors/data/models/patient_login_model/patient_login_model.dart';
 import 'package:doctors/layouts/home/Choices/Emergancy/view_model/add_emergancy_view_model.dart';
 import 'package:doctors/layouts/home/Choices/Emergancy/view_model/add_emergancy_view_model_state.dart';

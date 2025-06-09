@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:doctors/core/reusable_componants/custom_text_field.dart';
 import 'package:doctors/core/utils/dialogs.dart';
 import 'package:doctors/core/utils/routes.dart';
