@@ -1,8 +1,6 @@
 import 'package:doctors/data/models/patient_login_model/patient_login_model.dart';
 
-abstract class PatientLoginViewModelState {
-  
-}
+abstract class PatientLoginViewModelState {}
 
 class PatientLoginViewModelInitial extends PatientLoginViewModelState {}
 

@@ -1,14 +1,15 @@
 class AllDoctorsModel {
   AllDoctorsModel({
-      this.firstName, 
-      this.lastName, 
-      this.gender, 
-      this.birthDate, 
-      this.emailAddress, 
-      this.phoneNumber, 
-      this.specialization, 
-      this.address, 
-      this.password,});
+    this.firstName,
+    this.lastName,
+    this.gender,
+    this.birthDate,
+    this.emailAddress,
+    this.phoneNumber,
+    this.specialization,
+    this.address,
+    this.password,
+  });
 
   AllDoctorsModel.fromJson(dynamic json) {
     firstName = json['first_Name'];
@@ -44,5 +45,4 @@ class AllDoctorsModel {
     map['password'] = password;
     return map;
   }
-
 }

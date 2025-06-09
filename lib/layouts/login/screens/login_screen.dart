@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     Routes.homeScreenRouteName,
-                    (route) => false,
+                    (route) => false,arguments: state.patientLoginModel
                   );
                 },
               );
@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     Routes.homeScreenRouteName,
-                    (route) => false,
+                    (route) => false,arguments: state.doctorLoginModel
                   );
                 },
               );

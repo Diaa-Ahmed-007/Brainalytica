@@ -1,4 +1,3 @@
-
 import 'package:doctors/layouts/Flows/Patients/provider/Patient_register_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

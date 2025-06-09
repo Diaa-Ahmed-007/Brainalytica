@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:doctors/core/reusable_componants/custom_text_field.dart';
 import 'package:doctors/core/utils/dialogs.dart';
 import 'package:doctors/core/utils/routes.dart';
@@ -47,7 +45,6 @@ class _PatientRegisterState extends State<PatientRegister> {
         } else {
           CustomDialogs.closeDialogs(context);
           if (state is PatientRegisterViewModelSuccessState) {
-            log(state.patientModel.message.toString());
             CustomDialogs.showSuccessDialog(
                 context, "Account created successfully!");
             Future.delayed(

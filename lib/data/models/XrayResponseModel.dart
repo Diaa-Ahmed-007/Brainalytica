@@ -1,7 +1,8 @@
 class XrayResponseModel {
   XrayResponseModel({
-      this.strokeDetection, 
-      this.strokeClassification,});
+    this.strokeDetection,
+    this.strokeClassification,
+  });
 
   XrayResponseModel.fromJson(dynamic json) {
     strokeDetection = json['stroke_detection'];
@@ -16,5 +17,4 @@ class XrayResponseModel {
     map['stroke_classification'] = strokeClassification;
     return map;
   }
-
 }

@@ -59,7 +59,7 @@ class Doctor {
     if (doctorPatients != null) {
       map['doctorPatients'] = doctorPatients?.map((v) {
         if (v is Map<String, dynamic>) return v;
-        return {}; 
+        return {};
       }).toList();
     }
     if (doctorMedicalImages != null) {

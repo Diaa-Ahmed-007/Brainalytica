@@ -13,7 +13,14 @@ class PatientRegisterDataSourceImpl extends PatientRegisterDataSource {
   @factoryMethod
   PatientRegisterDataSourceImpl(this.apiManger);
   @override
-  Future<Either<PatientModel, String>> registerPatient({required String firstName, required String lastName, required String gender, required String birthDate, required String emailAddress, required String phoneNumber, required String password}) async {
+  Future<Either<PatientModel, String>> registerPatient(
+      {required String firstName,
+      required String lastName,
+      required String gender,
+      required String birthDate,
+      required String emailAddress,
+      required String phoneNumber,
+      required String password}) async {
     try {
       var response = await apiManger.postBackEndRequest(
           endPoints: EndPoints.patientRegisterEndPoint,
@@ -30,10 +37,10 @@ class PatientRegisterDataSourceImpl extends PatientRegisterDataSource {
           PatientModel.fromJson(response.data);
       return Left(patientRegisterResponse);
     } on DioException catch (e) {
-    String errorMessage = DioExceptionHandler.handleException(e);
-    return Right(errorMessage);
-  } catch (e) {
-    return Right(e.toString());
-  }
+      String errorMessage = DioExceptionHandler.handleException(e);
+      return Right(errorMessage);
+    } catch (e) {
+      return Right(e.toString());
+    }
   }
 }

@@ -31,6 +31,17 @@ class ApiManger {
     var response = await dioBackEnd.post(endPoints, data: body);
     return response;
   }
+  
+  Future<Response> deleteBackEndRequest({
+  required String endPoints,
+  Map<String, dynamic>? body,
+}) async {
+  var response = await dioBackEnd.delete(
+    endPoints,
+    data: body,
+  );
+  return response;
+}
 
 //---------------------------------------------------
 // Ai model server

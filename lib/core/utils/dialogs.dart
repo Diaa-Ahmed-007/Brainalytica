@@ -22,7 +22,8 @@ class CustomDialogs {
   }
 
   /// **Show Success Dialog**
-  static void showSuccessDialog(BuildContext context, String message,{Function()? onPressed}) {
+  static void showSuccessDialog(BuildContext context, String message,
+      {Function()? onPressed}) {
     _showDialog(
       context,
       icon: Icons.check_circle_outline,
@@ -118,7 +119,8 @@ class CustomDialogs {
         final screenHeight = MediaQuery.of(context).size.height;
 
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Container(
             width: screenWidth * 0.8,
             padding: EdgeInsets.all(screenWidth * 0.05),
@@ -128,7 +130,10 @@ class CustomDialogs {
                 Icon(icon, color: iconColor, size: screenWidth * 0.14),
                 SizedBox(height: screenHeight * 0.02),
                 Text(title,
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black87)),
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87)),
                 if (content != null) ...[
                   SizedBox(height: screenHeight * 0.01),
                   Text(content,
@@ -141,7 +146,9 @@ class CustomDialogs {
                 ],
                 if (actions != null) ...[
                   SizedBox(height: screenHeight * 0.03),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: actions),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: actions),
                 ],
               ],
             ),
@@ -164,22 +171,28 @@ class CustomDialogs {
           ? OutlinedButton(
               onPressed: onPressed,
               style: OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
                 side: BorderSide(color: color),
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
               child: Text(label,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: color)),
+                  style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500, color: color)),
             )
           : ElevatedButton(
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: color,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
               child: Text(label,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white)),
             ),
     );
   }

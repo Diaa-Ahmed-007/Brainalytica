@@ -30,7 +30,7 @@ class PatientLoginDataSourceImpl extends PatientLoginDataSource {
       log("1$errorMessage");
       return Right(errorMessage);
     } catch (e) {
-      log("2${e.toString()}");
+      log("2 ${e.toString()}");
       return Right(e.toString());
     }
   }
