@@ -14,6 +14,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../core/api/api_manger.dart' as _i993;
 import '../data/data_source_contract/doctor/doctor_login_data_source.dart'
     as _i1041;
+import '../data/data_source_contract/home/analysis_data_source.dart' as _i1019;
 import '../data/data_source_contract/home/emergancy_data_source.dart' as _i992;
 import '../data/data_source_contract/home/get_all_doctors_data_source.dart'
     as _i738;
@@ -30,6 +31,7 @@ import '../data/data_source_impl/auth/patient/patient_login_data_source_impl.dar
     as _i951;
 import '../data/data_source_impl/auth/patient/patient_register_data_source_impl.dart'
     as _i841;
+import '../data/data_source_impl/home/analysis_data_source_impl.dart' as _i651;
 import '../data/data_source_impl/home/emergancy_data_source_impl.dart' as _i842;
 import '../data/data_source_impl/home/get_all_doctors_data_source_impl.dart'
     as _i599;
@@ -39,6 +41,8 @@ import '../data/data_source_impl/home/xray_data_source_impl.dart' as _i782;
 import '../layouts/Flows/Patients/view_model/sign_up_view_model.dart' as _i796;
 import '../layouts/home/Choices/add_data/view_model/add_patient_data_view_model.dart'
     as _i535;
+import '../layouts/home/Choices/add_data/Xray/view_model/analysis_view_model.dart'
+    as _i437;
 import '../layouts/home/Choices/add_data/Xray/view_model/xray_view_model.dart'
     as _i955;
 import '../layouts/home/Choices/Doctors/view_model/all_doctors_view_model.dart'
@@ -64,6 +68,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i993.ApiManger>(() => _i993.ApiManger());
     gh.factory<_i992.EmergancyDataSource>(
         () => _i842.EmergancyDataSourceImpl(gh<_i993.ApiManger>()));
+    gh.factory<_i1019.AnalysisDataSource>(
+        () => _i651.AnalysisDataSourceImpl(gh<_i993.ApiManger>()));
     gh.factory<_i151.PatientRegisterDataSource>(
         () => _i841.PatientRegisterDataSourceImpl(gh<_i993.ApiManger>()));
     gh.factory<_i483.XrayDataSource>(
@@ -80,6 +86,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i796.PatientRegisterViewModel(gh<_i151.PatientRegisterDataSource>()));
     gh.factory<_i472.PatientLoginViewModel>(
         () => _i472.PatientLoginViewModel(gh<_i755.PatientLoginDataSource>()));
+    gh.factory<_i437.AnalysisViewModel>(
+        () => _i437.AnalysisViewModel(gh<_i1019.AnalysisDataSource>()));
     gh.factory<_i567.DoctorLoginViewModel>(
         () => _i567.DoctorLoginViewModel(gh<_i1041.DoctorLoginDataSource>()));
     gh.factory<_i859.AllDoctorsViewModel>(

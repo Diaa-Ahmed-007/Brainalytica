@@ -17,40 +17,45 @@ class DoctorCard extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              Text(
-                  "Dr name: ${doctorsModel.firstName} ${doctorsModel.lastName}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  )),
-              SizedBox(
-                height: 10,
+              
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      "Dr name: ${doctorsModel.firstName} ${doctorsModel.lastName}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Specialization: ${doctorsModel.specialization}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Address: ${doctorsModel.address}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Phone Number: ${doctorsModel.phoneNumber}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ],
               ),
-              Text("Specialization: ${doctorsModel.specialization}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  )),
-              SizedBox(
-                height: 10,
-              ),
-              Text("Address: ${doctorsModel.address}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  )),
-              SizedBox(
-                height: 10,
-              ),
-              Text("Phone Number: ${doctorsModel.phoneNumber}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  )),
             ],
           ),
         ),

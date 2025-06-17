@@ -11,21 +11,121 @@
 			"item": [
 				{
 					"name": "Patient Registeration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>Status</th>\r",
+									"    </tr>\r",
+									"    <tr>\r",
+									"        <td>{{response}}</td>\r",
+									"    </tr>\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return { response: pm.response.text() }\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVc2VyQXV0aGVudGljYXRpb24iLCJqdGkiOiI4NDExODk4Yi0xNDZmLTQ5NjQtOWMxMi1jNzIxMzU4MGFhYzYiLCJQYXRpZW50X0lkIjoiMTUiLCJFbWFpbF9BZGRyZXNzIjoic2hhaW1hYUFobWVkQGdtYWlsLmNvbSIsImV4cCI6MTc0MDY1NzUyOSwiaXNzIjoiaHR0cHM6Ly9zdHJva2VhcHAucnVuYXNwLm5ldCIsImF1ZCI6Ikp3dEF1ZGllbmNlIn0.hIzTDxUDnZzcBghc0f4ToGsLekOXHUyJiP5EDkPVKQQ"
+							}
+						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"First_Name\": \"Taha\",\r\n  \"Last_Name\": \"Khalid\",\r\n  \"Gender\": \"Male\",\r\n  \"Birth_Date\": \"1997-04-01\",\r\n  \"Email_Address\": \"Taha@gmail.com\",\r\n  \"Phone_Number\": \"01136298290\",\r\n  \"Password\": \"pass_123\"\r\n}",
+							"raw": "{\r\n  \"first_Name\": \"Reham\",\r\n  \"last_Name\": \"Hassan\",\r\n  \"gender\": \"Female\",\r\n  \"birth_Date\": \"1995-03-25\",\r\n  \"email_Address\": \"rehamHassan@gmail.com\",\r\n  \"phone_Number\": \"+201187654321\",\r\n  \"password\": \"Am_Hs456\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://strokeapp.runasp.net/api/Patients/Registration"
+						"url": "http://strokeapp.runasp.net/api/Patients/PatientRegistration"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Patient Registeration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"first_Name\": \"Amina\",\r\n  \"last_Name\": \"Hassan\",\r\n  \"gender\": \"Female\",\r\n  \"birth_Date\": \"1995-03-25\",\r\n  \"email_Address\": \"aminaHassan@gmail.com\",\r\n  \"phone_Number\": \"+201187654321\",\r\n  \"password\": \"Am_Hs456\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://strokeapp.runasp.net/api/Patients/PatientRegistration"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Feb 2025 17:04:36 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"user\": {\n        \"patient_Id\": 17,\n        \"first_Name\": \"Amina\",\n        \"last_Name\": \"Hassan\",\n        \"gender\": \"Female\",\n        \"birth_Date\": \"1995-03-25\",\n        \"email_Address\": \"aminaHassan@gmail.com\",\n        \"phone_Number\": \"+201187654321\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "Login",
@@ -55,7 +155,58 @@
 						},
 						"url": "http://strokeapp.runasp.net/api/Patients/Login"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Key",
+										"value": "key-d523d3a0-9cac-4ee4-a848-88677449d04e",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Email_Address\": \"shaimaaAhmed@gmail.com\",\r\n  \"Password\": \"Passhg234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://strokeapp.runasp.net/api/patients/PatientLogin"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Feb 2025 17:03:16 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Login successful\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVc2VyQXV0aGVudGljYXRpb24iLCJqdGkiOiI2ZjdmOTUxMC1jZDA2LTQ4NDktYTRmNC1jMGIxNGVjNWE5MWYiLCJQYXRpZW50X0lkIjoiMTUiLCJFbWFpbF9BZGRyZXNzIjoic2hhaW1hYUFobWVkQGdtYWlsLmNvbSIsImV4cCI6MTc0MDcxODk5NiwiaXNzIjoiaHR0cHM6Ly9zdHJva2VhcHAucnVuYXNwLm5ldC8iLCJhdWQiOiJKd3RBdWRpZW5jZSJ9.QOSYnpLJBxU-lCgEZoFsl4uInM1C_5DcRuav6qOSG1o\",\n    \"user\": {\n        \"patient_Id\": 15,\n        \"email_Address\": \"shaimaaAhmed@gmail.com\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "GetPatients",
@@ -210,6 +361,275 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Patient Medical Data",
+			"item": [
+				{
+					"name": "Add Patient Medical Data",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Patients Medical Data",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Patient Medical Data By Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Patient Medical Data",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Emergency",
+			"item": [
+				{
+					"name": "Create Emergency",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Emergency",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Emergency By Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Emergencies",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update Emergency",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medical Image",
+			"item": [
+				{
+					"name": "Store X-ray Image",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Image as Base64",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Image as a File",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Image",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Diagnosis",
+			"item": [
+				{
+					"name": "Add Diagnosis",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Diagnosis with image link",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Diagnosis",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stroke Prediction",
+			"item": [
+				{
+					"name": "Add Prediction",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKd3RTdWJqZWN0IiwianRpIjoiZTk2YzExNDQtNTM4Ny00ZDA4LWIyOGEtYWU2MzYzMGQyYjk2IiwiUGF0aWVudF9JZCI6IjMyIiwiRW1haWxfQWRkcmVzcyI6Im1hci5pYnJhaGltOTZAeWFob28uY29tIiwiZXhwIjoxNzQ5NjIzOTc2LCJpc3MiOiJodHRwOi8vc3Ryb2tlYXBwLnJ1bmFzcC5uZXQvIiwiYXVkIjoiSnd0QXVkaWVuY2UifQ.iZAgZuh6tWC6yNPfwQ5xckSQqjE9RaZeOB6TDB0xerc",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n  \"gender\": \"Male\",\r\n  \"age\": 85,\r\n  \"hypertension\": \"Yes\",\r\n  \"HeartDisease\": \"1\",\r\n  \"EverMarried\": \"1\",\r\n  \"WorkType\": \"Self-employed\",\r\n  \"ResidenceType\": \"Urban\",\r\n  \"avg_glucose_level\": 450.0,\r\n  \"bmi\": 52.0,\r\n  \"SmokingStatus\": \"smokes\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://strokeapp.runasp.net/api/StrokePrediction/Predict"
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 18:42:08 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"AI model failed.\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ChatBot",
+			"item": [
+				{
+					"name": "Add Message",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Messages",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Message",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update Message",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Message",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "Token:",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "Token",
+			"value": "",
+			"type": "default"
 		}
 	]
 }

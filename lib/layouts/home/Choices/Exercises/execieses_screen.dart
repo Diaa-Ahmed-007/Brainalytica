@@ -1,3 +1,4 @@
+import 'package:doctors/core/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/custom_home_button.dart';
@@ -44,28 +45,39 @@ class ExeciesesScreen extends StatelessWidget {
           ),
           CustomHomeButton(
             title: "Hands",
-            ontap: () {},
+            ontap: () {
+              Navigator.pushNamed(
+                  context, Routes.handsExercisesScreenRouteName);
+            },
           ),
           SizedBox(
             height: height * 0.04,
           ),
           CustomHomeButton(
-            title: "Walking",
-            ontap: () {},
+            title: "lower Limb Exercises",
+            ontap: () {
+              Navigator.pushNamed(
+                  context, Routes.lowerLimbExercisesScreenRouteName);
+            },
           ),
           SizedBox(
             height: height * 0.04,
           ),
           CustomHomeButton(
-            title: "Perception&Brain",
-            ontap: () {},
+            title: "pronunciation And Speech Exercises",
+            ontap: () {
+              Navigator.pushNamed(context,
+                  Routes.pronunciationAndSpeechExercisesScreenRouteName);
+            },
           ),
           SizedBox(
             height: height * 0.04,
           ),
           CustomHomeButton(
-            title: "Relax&Breathe",
-            ontap: () {},
+            title: "leg Exercises",
+            ontap: () {
+              Navigator.pushNamed(context, Routes.legExercisesScreenRouteName);
+            },
           ),
         ],
       ),

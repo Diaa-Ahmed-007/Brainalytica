@@ -9,10 +9,15 @@ import 'package:doctors/layouts/home/Choices/Doctors/doctors_screen.dart';
 import 'package:doctors/layouts/home/Choices/Doctors/view_model/all_doctors_view_model.dart';
 import 'package:doctors/layouts/home/Choices/Emergancy/emergancy_screen.dart';
 import 'package:doctors/layouts/home/Choices/Emergancy/view_model/add_emergancy_view_model.dart';
+import 'package:doctors/layouts/home/Choices/Exercises/choises/hands_exercises_screen.dart';
+import 'package:doctors/layouts/home/Choices/Exercises/choises/leg_exercises_screen.dart';
+import 'package:doctors/layouts/home/Choices/Exercises/choises/lower_limb_exercises_screen.dart';
+import 'package:doctors/layouts/home/Choices/Exercises/choises/pronunciation_and_speech_exercises_screen.dart';
 import 'package:doctors/layouts/home/Choices/Exercises/execieses_screen.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/xray_view_model.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/xRay_screen.dart';
 import 'package:doctors/layouts/home/Choices/add_data/init_patient_data_screen.dart';
+import 'package:doctors/layouts/home/Choices/add_data/provider/analysis_data_provider.dart';
 import 'package:doctors/layouts/home/Choices/add_data/provider/save_xray_results_provider.dart';
 import 'package:doctors/layouts/home/Choices/add_data/provider/upload_provider.dart';
 import 'package:doctors/layouts/home/Choices/add_data/view_model/add_patient_data_view_model.dart';
@@ -79,6 +84,12 @@ class Routes {
           create: (context) => getIt<AddEmergancyViewModel>(),
           child: const EmergancyScreen(),
         ),
+    handsExercisesScreenRouteName: (context) => const HandsExercisesScreen(),
+    lowerLimbExercisesScreenRouteName: (context) =>
+        const LowerLimbExercisesScreen(),
+    pronunciationAndSpeechExercisesScreenRouteName: (context) =>
+        const PronunciationAndSpeechExercisesScreen(),
+    legExercisesScreenRouteName: (context) => const LegExercisesScreen(),
   };
 
 //------------------------------------------------------------------
@@ -96,4 +107,11 @@ class Routes {
   static const String doctorScreenRouteName = "DoctorScreen";
   static const String patientScreenRouteName = "PatientScreen";
   static const String emergeancyScreenRouteName = "EmergencyScreen";
+
+  static const String handsExercisesScreenRouteName = "HandsExercisesScreen";
+  static const String lowerLimbExercisesScreenRouteName =
+      "LowerLimbExercisesScreen";
+  static const String pronunciationAndSpeechExercisesScreenRouteName =
+      "PronunciationAndSpeechExercisesScreen";
+  static const String legExercisesScreenRouteName = "LegExercisesScreen";
 }
