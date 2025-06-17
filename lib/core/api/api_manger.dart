@@ -31,26 +31,26 @@ class ApiManger {
     var response = await dioBackEnd.post(endPoints, data: body);
     return response;
   }
-  
+
   Future<Response> deleteBackEndRequest({
-  required String endPoints,
-  Map<String, dynamic>? body,
-}) async {
-  var response = await dioBackEnd.delete(
-    endPoints,
-    data: body,
-  );
-  return response;
-}
+    required String endPoints,
+    Map<String, dynamic>? body,
+  }) async {
+    var response = await dioBackEnd.delete(
+      endPoints,
+      data: body,
+    );
+    return response;
+  }
 
 //---------------------------------------------------
-// Ai model server
+// xray model server
 
   static late Dio dioAiModel;
-  static initAiModel() {
+  static initXrayAiModel() {
     dioBackEnd = Dio(
       BaseOptions(
-        baseUrl: Constants.baseUrlAiModelServer,
+        baseUrl: Constants.baseUrlXrayAiModel,
       ),
     );
   }
@@ -66,7 +66,7 @@ class ApiManger {
     return response;
   }
 
-  Future<Response> postAiModelRequest({
+  Future<Response> postXrayAiModelRequest({
     required String endPoints,
     Map<String, dynamic>? body,
     String? imageFile,
@@ -85,6 +85,49 @@ class ApiManger {
         },
       ),
     );
+
+    return response;
+  }
+
+//---------------------------------------------------
+
+  static late Dio dioAnalysis;
+  static initAnaysisAiModel() {
+    dioAnalysis = Dio(
+      BaseOptions(
+        baseUrl: Constants.baseUrlAnalysisAiModel,
+      ),
+    );
+  }
+
+  Future<Response> postAnalysisAiModelRequest({
+    required String endPoints,
+    Map<String, dynamic>? body,
+  }) async {
+    Response response = await dioAnalysis.post(
+      endPoints,
+      data: body,
+      options: Options(
+        headers: {"Content-Type": "application/json"},
+        followRedirects: false,
+        validateStatus: (status) => status != null && status < 500,
+      ),
+    );
+
+    if (response.statusCode == 307) {
+      final redirectedUrl = response.headers.value('location');
+      if (redirectedUrl != null) {
+        response = await dioAnalysis.post(
+          redirectedUrl,
+          data: body,
+          options: Options(
+            headers: {"Content-Type": "application/json"},
+          ),
+        );
+      } else {
+        throw Exception("🔴 307 Redirection بدون Location header.");
+      }
+    }
 
     return response;
   }

@@ -14,7 +14,7 @@ class XrayDataSourceImpl extends XrayDataSource {
   Future<Either<XrayResponseModel, String>> uploadXray(
       {required String file}) async {
     try {
-      var response = await apiManger.postAiModelRequest(
+      var response = await apiManger.postXrayAiModelRequest(
           endPoints: EndPoints.xrayEndPoint, imageFile: file);
       XrayResponseModel xrayResponseModel =
           XrayResponseModel.fromJson(response.data);

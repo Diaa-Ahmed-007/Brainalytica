@@ -4,11 +4,15 @@ import 'dart:ui';
 
 import 'package:doctors/core/utils/assets.dart';
 import 'package:doctors/data/models/XrayResponseModel.dart';
+import 'package:doctors/di/di.dart';
 import 'package:doctors/layouts/Flows/widgets/Custom_button.dart';
+import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/analysis_view_model.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/xray_view_model.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/xray_view_model_states.dart';
+import 'package:doctors/layouts/home/Choices/add_data/provider/analysis_data_provider.dart';
 import 'package:doctors/layouts/home/Choices/add_data/provider/save_xray_results_provider.dart';
 import 'package:doctors/layouts/home/Choices/add_data/provider/upload_provider.dart';
+import 'package:doctors/layouts/home/Choices/add_data/widgets/add_analysis_data.dart';
 import 'package:doctors/layouts/home/Choices/add_data/widgets/result_widget.dart';
 import 'package:doctors/layouts/home/Choices/add_data/widgets/upload_button.dart';
 import 'package:doctors/layouts/home/Choices/add_data/widgets/upload_buttons_widget.dart';
@@ -27,7 +31,7 @@ class XrayScreen extends StatelessWidget {
 
       if (xfile == null) {
         log("No image selected.");
-        return; // User canceled the picker
+        return;
       }
 
       UploadProvider provider =
@@ -35,7 +39,6 @@ class XrayScreen extends StatelessWidget {
       provider.setFile(File(xfile.path));
       provider.changeIsShown(false);
 
-      // Upload the selected image
       XrayViewModel.get(context).upload(filePath: provider.file!.path);
     } catch (e) {
       log("Image picking error: $e");
@@ -44,6 +47,22 @@ class XrayScreen extends StatelessWidget {
             content: Text("Failed to pick image. Please try again.")),
       );
     }
+  }
+
+  void bottomSheetAddData(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return BlocProvider(
+          create: (context) => getIt<AnalysisViewModel>(),
+          child: const AddAnalysisData(),
+        );
+      },
+    );
   }
 
   XrayResponseModel xrayResponseModel = XrayResponseModel();
@@ -55,7 +74,8 @@ class XrayScreen extends StatelessWidget {
     UploadProvider uploadProvider = Provider.of<UploadProvider>(context);
     SaveXrayResultsProvider saveXrayResultsProvider =
         Provider.of<SaveXrayResultsProvider>(context);
-
+    AnalysisDataProvider analysisDataProvider =
+        Provider.of<AnalysisDataProvider>(context);
     File? file = uploadProvider.file;
     return BlocListener<XrayViewModel, XrayViewModelState>(
       listener: (context, state) {
@@ -105,7 +125,9 @@ class XrayScreen extends StatelessWidget {
                     UploadButton(
                       height: height,
                       width: width,
-                      onTap: () {},
+                      onTap: () {
+                        bottomSheetAddData(context);
+                      },
                       title: "Analysis",
                     ),
                     SizedBox(width: width * 0.1),
@@ -130,7 +152,7 @@ class XrayScreen extends StatelessWidget {
                           width: double.infinity,
                           child: CustomButton(
                             title: "SAVE",
-                            ontap: () {},
+                            ontap: () => bottomSheetAddData(context),
                             color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
@@ -162,7 +184,6 @@ class XrayScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Display the picked image
                 if (file != null)
                   Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -170,15 +191,15 @@ class XrayScreen extends StatelessWidget {
                       width: double.infinity,
                       height: height * 0.27,
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: FileImage(file),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8))),
+                        image: DecorationImage(
+                          image: FileImage(file),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                      ),
                     ),
                   ),
-
                 SizedBox(height: height * 0.03),
                 ResultsWidget(
                   height: height,
@@ -192,6 +213,20 @@ class XrayScreen extends StatelessWidget {
                   width: width,
                   title: "stroke_classification",
                   result: saveXrayResultsProvider.strokeClassification,
+                ),
+                SizedBox(height: height * 0.05),
+                ResultsWidget(
+                  height: height,
+                  width: width,
+                  title: "prediction",
+                  result: analysisDataProvider.prediction,
+                ),
+                SizedBox(height: height * 0.05),
+                ResultsWidget(
+                  height: height,
+                  width: width,
+                  title: "probability",
+                  result: analysisDataProvider.probability.toString(),
                 ),
                 SizedBox(height: height * 0.05),
                 Padding(
