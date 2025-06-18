@@ -19,7 +19,8 @@ class AddAnalysisData extends StatelessWidget {
         TextEditingController(text: '450');
     final TextEditingController bmiController =
         TextEditingController(text: '52');
-    var provider = Provider.of<AnalysisDataProvider>(context);
+    var provider = Provider.of<AnalysisDataProvider>(context, listen: false);
+
     String gender = 'Male';
     String hypertension = 'Yes';
     String heartDisease = 'Yes';
@@ -37,18 +38,21 @@ class AddAnalysisData extends StatelessWidget {
       child: BlocListener<AnalysisViewModel, AnalysisViewModelState>(
         listener: (context, state) {
           if (state is AnalysisViewModelSuccess) {
-            log(state.analysisResponseModel.prediction ?? "");
-            provider.setPrediction(
-              state.analysisResponseModel.prediction ?? "",
-            );
-            provider.setProbability(
-              state.analysisResponseModel.probability?.toDouble() ?? 0.0,
-            );
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Analysis saved successfully!')),
-            );
+            final prediction = state.analysisResponseModel.prediction ?? "";
+            final probability =
+                state.analysisResponseModel.probability?.toDouble() ?? 0.0;
+
+            provider.setPrediction(prediction);
+            provider.setProbability(probability);
+
+            Future.delayed(Duration.zero, () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Analysis saved successfully!')),
+              );
+            });
           }
+
           if (state is AnalysisViewModelError) {
             log("Error: ${state.error}");
             Navigator.pop(context);

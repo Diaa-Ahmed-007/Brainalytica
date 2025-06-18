@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AnalysisDataProvider extends ChangeNotifier{
-  
-  String prediction = '';
-  double probability = 0;
+class AnalysisDataProvider extends ChangeNotifier {
+  String _prediction = '';
+  double _probability = 0.0;
 
-  void setPrediction(String newPrediction){
-    if (newPrediction == prediction) {
-      return;
-    }
-    prediction = newPrediction;
+  String get prediction => _prediction;
+  double get probability => _probability;
+
+  void setPrediction(String val) {
+    _prediction = val;
     notifyListeners();
   }
 
-  void setProbability(double newProbability){
-    if (newProbability == probability) {
-      return;
-    }
-    probability = newProbability;
+  void setProbability(double val) {
+    _probability = val;
     notifyListeners();
   }
-
 }

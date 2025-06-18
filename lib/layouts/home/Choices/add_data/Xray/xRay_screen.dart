@@ -69,13 +69,14 @@ class XrayScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final prediction = context.watch<AnalysisDataProvider>().prediction;
+    print("🔁 Prediction value: $prediction");
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     UploadProvider uploadProvider = Provider.of<UploadProvider>(context);
     SaveXrayResultsProvider saveXrayResultsProvider =
         Provider.of<SaveXrayResultsProvider>(context);
-    AnalysisDataProvider analysisDataProvider =
-        Provider.of<AnalysisDataProvider>(context);
     File? file = uploadProvider.file;
     return BlocListener<XrayViewModel, XrayViewModelState>(
       listener: (context, state) {
@@ -215,18 +216,26 @@ class XrayScreen extends StatelessWidget {
                   result: saveXrayResultsProvider.strokeClassification,
                 ),
                 SizedBox(height: height * 0.05),
-                ResultsWidget(
-                  height: height,
-                  width: width,
-                  title: "prediction",
-                  result: analysisDataProvider.prediction,
+                Consumer<AnalysisDataProvider>(
+                  builder: (context, provider, _) {
+                    return ResultsWidget(
+                      height: height,
+                      width: width,
+                      title: "prediction",
+                      result: provider.prediction,
+                    );
+                  },
                 ),
                 SizedBox(height: height * 0.05),
-                ResultsWidget(
-                  height: height,
-                  width: width,
-                  title: "probability",
-                  result: analysisDataProvider.probability.toString(),
+                Consumer<AnalysisDataProvider>(
+                  builder: (context, provider, _) {
+                    return ResultsWidget(
+                      height: height,
+                      width: width,
+                      title: "probability",
+                      result: provider.probability.toString(),
+                    );
+                  },
                 ),
                 SizedBox(height: height * 0.05),
                 Padding(
