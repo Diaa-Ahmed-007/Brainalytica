@@ -1,48 +1,33 @@
+import 'Data.dart';
+
 class AllDoctorsModel {
   AllDoctorsModel({
-    this.firstName,
-    this.lastName,
-    this.gender,
-    this.birthDate,
-    this.emailAddress,
-    this.phoneNumber,
-    this.specialization,
-    this.address,
-    this.password,
-  });
+      this.sucess, 
+      this.message, 
+      this.data,});
 
   AllDoctorsModel.fromJson(dynamic json) {
-    firstName = json['first_Name'];
-    lastName = json['last_Name'];
-    gender = json['gender'];
-    birthDate = json['birth_Date'];
-    emailAddress = json['email_Address'];
-    phoneNumber = json['phone_Number'];
-    specialization = json['specialization'];
-    address = json['address'];
-    password = json['password'];
+    sucess = json['sucess'];
+    message = json['message'];
+    if (json['data'] != null) {
+      data = [];
+      json['data'].forEach((v) {
+        data?.add(Data.fromJson(v));
+      });
+    }
   }
-  String? firstName;
-  String? lastName;
-  String? gender;
-  String? birthDate;
-  String? emailAddress;
-  String? phoneNumber;
-  String? specialization;
-  String? address;
-  String? password;
+  bool? sucess;
+  String? message;
+  List<Data>? data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['first_Name'] = firstName;
-    map['last_Name'] = lastName;
-    map['gender'] = gender;
-    map['birth_Date'] = birthDate;
-    map['email_Address'] = emailAddress;
-    map['phone_Number'] = phoneNumber;
-    map['specialization'] = specialization;
-    map['address'] = address;
-    map['password'] = password;
+    map['sucess'] = sucess;
+    map['message'] = message;
+    if (data != null) {
+      map['data'] = data?.map((v) => v.toJson()).toList();
+    }
     return map;
   }
+
 }

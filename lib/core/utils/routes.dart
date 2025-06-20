@@ -17,12 +17,12 @@ import 'package:doctors/layouts/home/Choices/Exercises/execieses_screen.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/xray_view_model.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/xRay_screen.dart';
 import 'package:doctors/layouts/home/Choices/add_data/init_patient_data_screen.dart';
-import 'package:doctors/layouts/home/Choices/add_data/provider/analysis_data_provider.dart';
 import 'package:doctors/layouts/home/Choices/add_data/provider/save_xray_results_provider.dart';
 import 'package:doctors/layouts/home/Choices/add_data/provider/upload_provider.dart';
 import 'package:doctors/layouts/home/Choices/add_data/view_model/add_patient_data_view_model.dart';
 import 'package:doctors/layouts/home/Choices/patient/all_patient_screen.dart';
 import 'package:doctors/layouts/home/Choices/patient/view_model/all_patient_view_model.dart';
+import 'package:doctors/layouts/home/chat_bot/chat_bot_view.dart';
 import 'package:doctors/layouts/home/screens/home_screen.dart';
 import 'package:doctors/layouts/login/screens/login_screen.dart';
 import 'package:doctors/layouts/login/view_model/doctor_login_view_model.dart';
@@ -90,6 +90,7 @@ class Routes {
     pronunciationAndSpeechExercisesScreenRouteName: (context) =>
         const PronunciationAndSpeechExercisesScreen(),
     legExercisesScreenRouteName: (context) => const LegExercisesScreen(),
+    chatBotViewRouteName: (_) => const ChatBotView(),
   };
 
 //------------------------------------------------------------------
@@ -107,7 +108,7 @@ class Routes {
   static const String doctorScreenRouteName = "DoctorScreen";
   static const String patientScreenRouteName = "PatientScreen";
   static const String emergeancyScreenRouteName = "EmergencyScreen";
-
+  static const String chatBotViewRouteName = "ChatBotViewScreen";
   static const String handsExercisesScreenRouteName = "HandsExercisesScreen";
   static const String lowerLimbExercisesScreenRouteName =
       "LowerLimbExercisesScreen";

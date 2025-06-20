@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:doctors/core/reusable_componants/custom_text_field.dart';
 import 'package:doctors/core/utils/assets.dart';
 import 'package:doctors/data/models/patient_login_model/patient_login_model.dart';
@@ -5,9 +7,66 @@ import 'package:doctors/layouts/home/Choices/Emergancy/view_model/add_emergancy_
 import 'package:doctors/layouts/home/Choices/Emergancy/view_model/add_emergancy_view_model_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
-class EmergancyScreen extends StatelessWidget {
+class EmergancyScreen extends StatefulWidget {
   const EmergancyScreen({super.key});
+
+  @override
+  State<EmergancyScreen> createState() => _EmergancyScreenState();
+}
+
+class _EmergancyScreenState extends State<EmergancyScreen> {
+  late TextEditingController nameController;
+  late TextEditingController addressController;
+  late TextEditingController phoneController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+    addressController = TextEditingController();
+    phoneController = TextEditingController();
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) return;
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.always &&
+          permission != LocationPermission.whileInUse) return;
+    }
+
+    final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    try {
+      // دي السطر الجديد اللي بيحول الإحداثيات لعنوان
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      final place = placemarks.first;
+
+      setState(() {
+        addressController.text =
+            '${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+        log('Address: ${addressController.text}'); // Log the address
+      });
+    } catch (e) {
+      setState(() {
+        addressController.text = '${position.latitude}, ${position.longitude}';
+        log('Address: ${addressController.text}');
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +74,9 @@ class EmergancyScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as PatientLoginModel;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    TextEditingController nameController = TextEditingController();
-    TextEditingController addressController = TextEditingController();
-    TextEditingController phoneController = TextEditingController();
+
     return BlocListener<AddEmergancyViewModel, AddEmergancyViewModelState>(
       listener: (context, state) {
-       
         if (state is AddEmergancyViewModelLoadingState) {
           showDialog(
             context: context,
@@ -29,7 +85,7 @@ class EmergancyScreen extends StatelessWidget {
                 const Center(child: CircularProgressIndicator()),
           );
         } else {
-          Navigator.pop(context); // Close loading if open
+          Navigator.pop(context);
         }
 
         if (state is AddEmergancyViewModelSuccessState) {
@@ -41,8 +97,8 @@ class EmergancyScreen extends StatelessWidget {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context); // Close dialog
-                    Navigator.pop(context); 
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: const Text("OK"),
                 ),
@@ -68,9 +124,7 @@ class EmergancyScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: height * 0.04, left: width * 0.03),
               child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: () => Navigator.pop(context),
                 icon: const Icon(
                   Icons.arrow_back_ios_new,
                   color: Colors.white,
@@ -83,9 +137,7 @@ class EmergancyScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Spacer(
-                    flex: 3,
-                  ),
+                  const Spacer(flex: 3),
                   CustomTextField(
                     hintText: "Name",
                     keyboard: TextInputType.name,
@@ -93,8 +145,8 @@ class EmergancyScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   CustomTextField(
-                    hintText: "Address",
-                    keyboard: TextInputType.datetime,
+                    hintText: "Address (auto-filled)",
+                    keyboard: TextInputType.text,
                     textController: addressController,
                   ),
                   const SizedBox(height: 20),
@@ -109,15 +161,15 @@ class EmergancyScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  const Spacer(
-                    flex: 2,
-                  ),
+                  const Spacer(flex: 2),
                   InkWell(
                     onTap: () {
                       context.read<AddEmergancyViewModel>().addEmergancy(
-                          name:  nameController.text,
-                          address:  addressController.text,
-                          phoneNumber:  phoneController.text,patientId: patient.user?.patientId?.toInt() ?? 0);
+                            name: nameController.text,
+                            address: addressController.text,
+                            phoneNumber: phoneController.text,
+                            patientId: patient.user?.patientId?.toInt() ?? 0,
+                          );
                     },
                     child: Container(
                       height: height * 0.1,

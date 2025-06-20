@@ -1,5 +1,5 @@
 import 'package:doctors/core/utils/assets.dart';
-import 'package:doctors/data/models/doctor_register_model/AllDoctorsModel.dart';
+import 'package:doctors/data/models/doctor_register_model/Data.dart';
 import 'package:doctors/layouts/home/Choices/Doctors/view_model/all_doctors_view_model.dart';
 import 'package:doctors/layouts/home/Choices/Doctors/view_model/all_doctors_view_model_state.dart';
 import 'package:doctors/layouts/home/Choices/Doctors/widgets/doctor_card.dart';
@@ -14,7 +14,7 @@ class DoctorsScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Colors.black54,
       body: Stack(
         alignment: Alignment.topLeft,
         children: [
@@ -43,7 +43,7 @@ class DoctorsScreen extends StatelessWidget {
               BlocBuilder<AllDoctorsViewModel, AllDoctorsViewModelState>(
                 builder: (context, state) {
                   if (state is AllDoctorsViewModelSuccess) {
-                    List<AllDoctorsModel> doctorsModel = state.allDoctorsModel;
+                    List<Data> doctorsModel = state.allDoctorsModel.data ?? [];
                     return Expanded(
                       child: ListView.separated(
                         separatorBuilder: (context, index) => const Divider(),

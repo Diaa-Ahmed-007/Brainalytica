@@ -11,13 +11,11 @@ class GetAllDoctorsDataSourceImpl extends GetAllDoctorsDataSource {
   @factoryMethod
   GetAllDoctorsDataSourceImpl(this.apiManger);
   @override
-  Future<Either<List<AllDoctorsModel>, String>> getAllDoctors() async {
+  Future<Either<AllDoctorsModel, String>> getAllDoctors() async {
     try {
       var response = await apiManger.getBackEndRequest(
           endPoints: EndPoints.getAllDoctorsEndPoint);
-      List<AllDoctorsModel> allDoctorsModel = (response.data as List)
-          .map((e) => AllDoctorsModel.fromJson(e))
-          .toList();
+      AllDoctorsModel allDoctorsModel = AllDoctorsModel.fromJson(response.data);
       return Left(allDoctorsModel);
     } catch (e) {
       return Right(e.toString());

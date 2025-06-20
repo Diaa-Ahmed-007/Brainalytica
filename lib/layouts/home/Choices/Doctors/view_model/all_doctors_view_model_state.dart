@@ -9,7 +9,7 @@ class AllDoctorsViewModelInitial extends AllDoctorsViewModelState {}
 class AllDoctorsViewModelLoading extends AllDoctorsViewModelState {}
 
 class AllDoctorsViewModelSuccess extends AllDoctorsViewModelState {
-  final List<AllDoctorsModel> allDoctorsModel;
+  final AllDoctorsModel allDoctorsModel;
   AllDoctorsViewModelSuccess(this.allDoctorsModel);
 }
 

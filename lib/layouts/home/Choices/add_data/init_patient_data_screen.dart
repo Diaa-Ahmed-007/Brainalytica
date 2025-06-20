@@ -315,24 +315,22 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                     // Submit
                     InkWell(
                       onTap: () {
-                        // context.read<AddPatientDataViewModel>().addPatientData(
-                        //       weight:
-                        //           double.parse(weightController.text) ?? 50.0,
-                        //       pharmaceutical: pharmaceuticalController.text,
-                        //       chronicDiseases: chronicDiseasesController.text,
-                        //       hadStroke: hadStroke,
-                        //       strokeInjuryDate:
-                        //           (strokeInjuryDate ?? DateTime.now())
-                        //               .toIso8601String()
-                        //               .split('T')
-                        //               .first,
-                        //       bloodType: selectedBloodType ?? "O+",
-                        //       bloodTransfusion: bloodTransfusion,
-                        //       hadSurgery: hadSurgery,
-                        //       patientId: patient.user?.patientId?.toInt() ?? 0,
-                        //     );
-                        Navigator.pushReplacementNamed(
-                            context, Routes.xrayScreenRouteName);
+                        context.read<AddPatientDataViewModel>().addPatientData(
+                              weight:
+                                  double.parse(weightController.text) ?? 50.0,
+                              pharmaceutical: pharmaceuticalController.text,
+                              chronicDiseases: chronicDiseasesController.text,
+                              hadStroke: hadStroke,
+                              strokeInjuryDate:
+                                  (strokeInjuryDate ?? DateTime.now())
+                                      .toIso8601String()
+                                      .split('T')
+                                      .first,
+                              bloodType: selectedBloodType ?? "O+",
+                              bloodTransfusion: bloodTransfusion,
+                              hadSurgery: hadSurgery,
+                              patientId: patient.user?.patientId?.toInt() ?? 0,
+                            );
                       },
                       child: Container(
                         height: height * 0.1,

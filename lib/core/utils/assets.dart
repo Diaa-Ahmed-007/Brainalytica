@@ -14,6 +14,10 @@ class Assets {
   /// assets/images/emergancy_background.png
   static const String assetsImagesEmergancyBackground = "assets/images/emergancy_background.png";
 
+  /// Assets for assetsImagesFemaleDoctor
+  /// assets/images/female_doctor.png
+  static const String assetsImagesFemaleDoctor = "assets/images/female_doctor.png";
+
   /// Assets for assetsImagesFlowsBackground
   /// assets/images/flows_background.png
   static const String assetsImagesFlowsBackground = "assets/images/flows_background.png";
@@ -21,6 +25,10 @@ class Assets {
   /// Assets for assetsImagesLoginBackground
   /// assets/images/login_background.png
   static const String assetsImagesLoginBackground = "assets/images/login_background.png";
+
+  /// Assets for assetsImagesMaleDoctor
+  /// assets/images/male_doctor.png
+  static const String assetsImagesMaleDoctor = "assets/images/male_doctor.png";
 
   /// Assets for assetsImagesPatientScreenBackground
   /// assets/images/patient_screen_background.png

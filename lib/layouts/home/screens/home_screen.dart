@@ -101,7 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
           CustomHomeButton(
             title: "Emergancy",
             ontap: () {
-              Navigator.pushNamed(context, Routes.emergeancyScreenRouteName,arguments: patient);
+              Navigator.pushNamed(context, Routes.emergeancyScreenRouteName,
+                  arguments: patient);
             },
           ),
           Visibility(
@@ -112,11 +113,26 @@ class _HomeScreenState extends State<HomeScreen> {
               title: "add my data",
               ontap: () {
                 Navigator.pushNamed(
-                    context, Routes.initPatientDateScreenRouteName,arguments: patient);
+                    context, Routes.initPatientDateScreenRouteName,
+                    arguments: patient);
               },
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          String token = patient?.token ?? doctor?.token ?? '';
+          Navigator.pushNamed(
+            context,
+            Routes.chatBotViewRouteName,
+            arguments:token,
+          );
+        },
+        shape: const CircleBorder(),
+        child: Icon(
+          Icons.chat,
+        ),
       ),
     );
   }
