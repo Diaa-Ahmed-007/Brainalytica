@@ -40,6 +40,7 @@ class XrayScreen extends StatelessWidget {
 
       UploadProvider provider =
           Provider.of<UploadProvider>(context, listen: false);
+          log(xfile.path);
       provider.setFile(File(xfile.path));
       provider.changeIsShown(false);
 

@@ -17,7 +17,8 @@ class ApiManger {
 
   Future<Response> getBackEndRequest(
       {required String endPoints,
-      Map<String, dynamic>? queryParameters,Map<String, dynamic>? header}) async {
+      Map<String, dynamic>? queryParameters,
+      Map<String, dynamic>? header}) async {
     var response = await dioBackEnd.get(
       endPoints,
       queryParameters: queryParameters,
@@ -31,9 +32,16 @@ class ApiManger {
     return response;
   }
 
-  Future<Response> postBackEndRequest(
-      {required String endPoints, Map<String, dynamic>? body,Map<String, dynamic>? headers,}) async {
-    var response = await dioBackEnd.post(endPoints, data: body,options: Options(headers: headers),);
+  Future<Response> postBackEndRequest({
+    required String endPoints,
+    Map<String, dynamic>? body,
+    Map<String, dynamic>? headers,
+  }) async {
+    var response = await dioBackEnd.post(
+      endPoints,
+      data: body,
+      options: Options(headers: headers),
+    );
     return response;
   }
 
@@ -53,7 +61,7 @@ class ApiManger {
 
   static late Dio dioAiModel;
   static initXrayAiModel() {
-    dioBackEnd = Dio(
+    dioAiModel = Dio(
       BaseOptions(
         baseUrl: Constants.baseUrlXrayAiModel,
       ),
@@ -81,7 +89,7 @@ class ApiManger {
       if (imageFile != null)
         "file": await MultipartFile.fromFile(imageFile, filename: "upload.jpg"),
     });
-    var response = await dioBackEnd.post(
+    var response = await dioAiModel.post(
       endPoints,
       data: formData,
       options: Options(
