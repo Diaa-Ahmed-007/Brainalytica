@@ -96,9 +96,10 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context); // Close dialog
+                    Navigator.pop(context);
                     Navigator.pushReplacementNamed(
-                        context, Routes.xrayScreenRouteName);
+                        context, Routes.xrayScreenRouteName,
+                        arguments: patient.token);
                   },
                   child: const Text("OK"),
                 ),
@@ -108,7 +109,9 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
         } else if (state is AddPatientDataViewModelErrorState) {
           log(state.errorMessage);
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error: ${state.errorMessage}")),
+            const SnackBar(
+                content: Text(
+                    "You already added your data. Please wait for the doctor to review it.")),
           );
         }
       },

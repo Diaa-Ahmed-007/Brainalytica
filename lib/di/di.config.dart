@@ -16,6 +16,8 @@ import '../data/data_source_contract/doctor/doctor_login_data_source.dart'
     as _i1041;
 import '../data/data_source_contract/doctor/doctor_register_data_source.dart'
     as _i721;
+import '../data/data_source_contract/home/add_patient_analysis_data_source.dart'
+    as _i331;
 import '../data/data_source_contract/home/analysis_data_source.dart' as _i1019;
 import '../data/data_source_contract/home/chatbot_data_source.dart' as _i506;
 import '../data/data_source_contract/home/emergancy_data_source.dart' as _i992;
@@ -38,6 +40,8 @@ import '../data/data_source_impl/auth/patient/patient_login_data_source_impl.dar
     as _i951;
 import '../data/data_source_impl/auth/patient/patient_register_data_source_impl.dart'
     as _i841;
+import '../data/data_source_impl/home/add_patient_analysis_data_source_impl.dart'
+    as _i810;
 import '../data/data_source_impl/home/analysis_data_source_impl.dart' as _i651;
 import '../data/data_source_impl/home/chatbot_data_source_impl.dart' as _i461;
 import '../data/data_source_impl/home/emergancy_data_source_impl.dart' as _i842;
@@ -56,6 +60,8 @@ import '../layouts/home/Choices/add_data/view_model/add_patient_data_view_model.
     as _i535;
 import '../layouts/home/Choices/add_data/Xray/view_model/analysis_view_model.dart'
     as _i437;
+import '../layouts/home/Choices/add_data/Xray/view_model/save_patient_analysis_view_model.dart'
+    as _i907;
 import '../layouts/home/Choices/add_data/Xray/view_model/xray_view_model.dart'
     as _i955;
 import '../layouts/home/Choices/Doctors/view_model/all_doctors_view_model.dart'
@@ -103,12 +109,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i951.PatientLoginDataSourceImpl(gh<_i993.ApiManger>()));
     gh.factory<_i1041.DoctorLoginDataSource>(
         () => _i670.DoctorLoginDataSourceImpl(gh<_i993.ApiManger>()));
+    gh.factory<_i331.AddPatientAnalysisDataSource>(
+        () => _i810.AddPatientAnalysisDataSourceImpl(gh<_i993.ApiManger>()));
     gh.factory<_i506.ChatbotDataSource>(
         () => _i461.ChatbotDataSourceImpl(gh<_i993.ApiManger>()));
     gh.factory<_i796.PatientRegisterViewModel>(() =>
         _i796.PatientRegisterViewModel(gh<_i151.PatientRegisterDataSource>()));
     gh.factory<_i242.ChatBotViewModel>(
         () => _i242.ChatBotViewModel(gh<_i506.ChatbotDataSource>()));
+    gh.factory<_i907.SavePatientAnalysisViewModel>(() =>
+        _i907.SavePatientAnalysisViewModel(
+            gh<_i331.AddPatientAnalysisDataSource>()));
     gh.factory<_i929.AllPatientsViewModel>(() =>
         _i929.AllPatientsViewModel(gh<_i230.PatientAnalysisDataSource>()));
     gh.factory<_i472.PatientLoginViewModel>(

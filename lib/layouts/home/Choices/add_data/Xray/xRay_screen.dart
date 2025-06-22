@@ -3,10 +3,14 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:doctors/core/utils/assets.dart';
+import 'package:doctors/core/utils/dialogs.dart'; // <-- لازم تضيف الاستيراد ده
+import 'package:doctors/data/models/AnalysisAiModel.dart';
 import 'package:doctors/data/models/XrayResponseModel.dart';
 import 'package:doctors/di/di.dart';
 import 'package:doctors/layouts/Flows/widgets/Custom_button.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/analysis_view_model.dart';
+import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/save_patient_analysis_view_model.dart';
+import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/save_patient_analysis_view_model_state.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/xray_view_model.dart';
 import 'package:doctors/layouts/home/Choices/add_data/Xray/view_model/xray_view_model_states.dart';
 import 'package:doctors/layouts/home/Choices/add_data/provider/analysis_data_provider.dart';
@@ -70,237 +74,286 @@ class XrayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prediction = context.watch<AnalysisDataProvider>().prediction;
-    print("🔁 Prediction value: $prediction");
-
+    final probability = context.watch<AnalysisDataProvider>().probability;
+    final String token = ModalRoute.of(context)?.settings.arguments as String;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     UploadProvider uploadProvider = Provider.of<UploadProvider>(context);
     SaveXrayResultsProvider saveXrayResultsProvider =
         Provider.of<SaveXrayResultsProvider>(context);
     File? file = uploadProvider.file;
-    return BlocListener<XrayViewModel, XrayViewModelState>(
-      listener: (context, state) {
-        if (state is XrayViewModeSuccess) {
-          xrayResponseModel = state.xrayResponseModel;
-          log(xrayResponseModel.strokeDetection ?? "");
-          log(xrayResponseModel.strokeClassification ?? "");
-          saveXrayResultsProvider.changeStrokeClassification(
-              xrayResponseModel.strokeClassification ?? "");
-          saveXrayResultsProvider
-              .changeStrokeDetection(xrayResponseModel.strokeDetection ?? "");
-          uploadProvider.changeIsShown(false);
-        }
-        if (state is XrayViewModeError) {
-          log(state.error);
-        }
-        showDialog(
-          context: context,
-          builder: (context) =>
-              const Center(child: CircularProgressIndicator()),
-        );
-        Navigator.pop(context);
-      },
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Image.asset(
-              Assets.assetsImagesXRayBackground,
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            ListView(
+
+    return BlocProvider(
+      create: (_) => getIt<SavePatientAnalysisViewModel>(),
+      child: BlocListener<SavePatientAnalysisViewModel,
+          SavePatientAnalysisViewModelState>(
+        listener: (context, state) {
+          if (state is SavePatientAnalysisLoadingState) {
+            CustomDialogs.showLoadingDialog(context);
+          } else {
+            CustomDialogs.closeDialogs(context);
+          }
+          if (state is SavePatientAnalysisSuccessState) {
+            CustomDialogs.showSuccessDialog(
+              context,
+              "Analysis saved successfully!",
+              onPressed: () {
+                Navigator.pop(context); // Close dialog
+              },
+            );
+          }
+          if (state is SavePatientAnalysisErrorState) {
+            CustomDialogs.showErrorDialog(
+              context,
+              state.errorMessage ?? "An error occurred.",
+            );
+          }
+        },
+        child: BlocListener<XrayViewModel, XrayViewModelState>(
+          listener: (context, state) {
+            if (state is XrayViewModeSuccess) {
+              xrayResponseModel = state.xrayResponseModel;
+              log(xrayResponseModel.strokeDetection ?? "");
+              log(xrayResponseModel.strokeClassification ?? "");
+              saveXrayResultsProvider.changeStrokeClassification(
+                  xrayResponseModel.strokeClassification ?? "");
+              saveXrayResultsProvider.changeStrokeDetection(
+                  xrayResponseModel.strokeDetection ?? "");
+              uploadProvider.changeIsShown(false);
+              CustomDialogs.closeDialogs(context);
+            }
+            if (state is XrayViewModeError) {
+              log(state.error);
+              CustomDialogs.closeDialogs(context);
+              CustomDialogs.showErrorDialog(
+                context,
+                "X-ray Analysis Error: ${state.error}",
+              );
+            }
+            if (state is XrayViewModeLoading) {
+              CustomDialogs.showLoadingDialog(context);
+            }
+          },
+          child: Scaffold(
+            body: Stack(
               children: [
-                const Text(
-                  "Patients",
-                  style: TextStyle(
-                    color: Color(0xffb8cfe1),
-                    fontSize: 50,
-                    fontWeight: FontWeight.w600,
-                  ),
+                Image.asset(
+                  Assets.assetsImagesXRayBackground,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
                 ),
-                SizedBox(height: height * 0.1),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                ListView(
                   children: [
-                    UploadButton(
-                      height: height,
-                      width: width,
-                      onTap: () {
-                        bottomSheetAddData(context);
-                      },
-                      title: "Analysis",
-                    ),
-                    SizedBox(width: width * 0.1),
-                    UploadButton(
-                      height: height,
-                      width: width,
-                      onTap: () {
-                        uploadProvider.changeIsShown(true);
-                      },
-                      title: "x_ray",
-                    ),
-                  ],
-                ),
-                SizedBox(height: height * 0.07),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.02),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: height * 0.07,
-                          width: double.infinity,
-                          child: CustomButton(
-                            title: "SAVE",
-                            ontap: () => bottomSheetAddData(context),
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: width * 0.1),
-                      Expanded(
-                        child: SizedBox(
-                          height: height * 0.07,
-                          width: double.infinity,
-                          child: CustomButton(
-                            title: "EDIT",
-                            ontap: () {},
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: height * 0.03),
-                const Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    "status_report",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                if (file != null)
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      width: double.infinity,
-                      height: height * 0.27,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: FileImage(file),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
+                    const Text(
+                      "Patients",
+                      style: TextStyle(
+                        color: Color(0xffb8cfe1),
+                        fontSize: 50,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                SizedBox(height: height * 0.03),
-                ResultsWidget(
-                  height: height,
-                  width: width,
-                  title: "stroke_Detection",
-                  result: saveXrayResultsProvider.strokeDetection,
-                ),
-                SizedBox(height: height * 0.03),
-                ResultsWidget(
-                  height: height,
-                  width: width,
-                  title: "stroke_classification",
-                  result: saveXrayResultsProvider.strokeClassification,
-                ),
-                SizedBox(height: height * 0.05),
-                Consumer<AnalysisDataProvider>(
-                  builder: (context, provider, _) {
-                    return ResultsWidget(
-                      height: height,
-                      width: width,
-                      title: "prediction",
-                      result: provider.prediction,
-                    );
-                  },
-                ),
-                SizedBox(height: height * 0.05),
-                Consumer<AnalysisDataProvider>(
-                  builder: (context, provider, _) {
-                    return ResultsWidget(
-                      height: height,
-                      width: width,
-                      title: "probability",
-                      result: provider.probability.toString(),
-                    );
-                  },
-                ),
-                SizedBox(height: height * 0.05),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                  child: SizedBox(
-                    height: height * 0.07,
-                    child: CustomButton(
-                      title: "cancel",
-                      ontap: () {
-                        Navigator.pop(context);
-                      },
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  ),
-                ),
-                SizedBox(height: height * 0.02),
-              ],
-            ),
-            Visibility(
-              visible: uploadProvider.isShown,
-              child: Align(
-                alignment: Alignment.center,
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    height: 250,
-                    width: 250,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.4),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(
+                    SizedBox(height: height * 0.1),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              onPressed: () =>
-                                  uploadProvider.changeIsShown(false),
-                              icon: const Icon(
-                                Icons.close,
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                            ),
-                          ],
+                        UploadButton(
+                          height: height,
+                          width: width,
+                          onTap: () {
+                            bottomSheetAddData(context);
+                          },
+                          title: "Analysis",
                         ),
-                        UploadButtonsWidget(
-                          title: "Gallery",
-                          onTap: () => pickImage(context, ImageSource.gallery),
-                        ),
-                        const SizedBox(height: 30),
-                        UploadButtonsWidget(
-                          title: "Camera",
-                          onTap: () => pickImage(context, ImageSource.camera),
+                        SizedBox(width: width * 0.1),
+                        UploadButton(
+                          height: height,
+                          width: width,
+                          onTap: () {
+                            uploadProvider.changeIsShown(true);
+                          },
+                          title: "x_ray",
                         ),
                       ],
                     ),
+                    SizedBox(height: height * 0.07),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.02),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: height * 0.07,
+                              width: double.infinity,
+                              child: Builder(
+                                builder: (context) => CustomButton(
+                                  title: "SAVE",
+                                  ontap: () {
+                                    // جلب الداتا من provider وتجهيز الموديل
+                                    final analysisModel = AnalysisAiModel(
+                                      prediction: prediction,
+                                      probability: probability,
+                                    );
+                                    context
+                                        .read<SavePatientAnalysisViewModel>()
+                                        .savePatientAnalysis(
+                                          token: token,
+                                          analysisAiModel: analysisModel,
+                                        );
+                                  },
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: width * 0.1),
+                          Expanded(
+                            child: SizedBox(
+                              height: height * 0.07,
+                              width: double.infinity,
+                              child: CustomButton(
+                                title: "EDIT",
+                                ontap: () {},
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: height * 0.03),
+                    const Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        "status_report",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    if (file != null)
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          width: double.infinity,
+                          height: height * 0.27,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: FileImage(file),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8)),
+                          ),
+                        ),
+                      ),
+                    SizedBox(height: height * 0.03),
+                    ResultsWidget(
+                      height: height,
+                      width: width,
+                      title: "stroke_Detection",
+                      result: saveXrayResultsProvider.strokeDetection,
+                    ),
+                    SizedBox(height: height * 0.03),
+                    ResultsWidget(
+                      height: height,
+                      width: width,
+                      title: "stroke_classification",
+                      result: saveXrayResultsProvider.strokeClassification,
+                    ),
+                    SizedBox(height: height * 0.05),
+                    Consumer<AnalysisDataProvider>(
+                      builder: (context, provider, _) {
+                        return ResultsWidget(
+                          height: height,
+                          width: width,
+                          title: "prediction",
+                          result: provider.prediction,
+                        );
+                      },
+                    ),
+                    SizedBox(height: height * 0.05),
+                    Consumer<AnalysisDataProvider>(
+                      builder: (context, provider, _) {
+                        return ResultsWidget(
+                          height: height,
+                          width: width,
+                          title: "probability",
+                          result: provider.probability.toString(),
+                        );
+                      },
+                    ),
+                    SizedBox(height: height * 0.05),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                      child: SizedBox(
+                        height: height * 0.07,
+                        child: CustomButton(
+                          title: "cancel",
+                          ontap: () {
+                            Navigator.pop(context);
+                          },
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02),
+                  ],
+                ),
+                Visibility(
+                  visible: uploadProvider.isShown,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        height: 250,
+                        width: 250,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  onPressed: () =>
+                                      uploadProvider.changeIsShown(false),
+                                  icon: const Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            UploadButtonsWidget(
+                              title: "Gallery",
+                              onTap: () =>
+                                  pickImage(context, ImageSource.gallery),
+                            ),
+                            const SizedBox(height: 30),
+                            UploadButtonsWidget(
+                              title: "Camera",
+                              onTap: () =>
+                                  pickImage(context, ImageSource.camera),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

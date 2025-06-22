@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:doctors/core/api/api_manger.dart';
@@ -31,18 +30,6 @@ class AnalysisDataSourceImpl extends AnalysisDataSource {
             "bmi": analysisBodyModel.bmi,
             "smoking_status": analysisBodyModel.smokingStatus
           }
-          //     {
-          //   "gender": "male",
-          //   "age": 35,
-          //   "hypertension": "yes",
-          //   "heart_disease": "no",
-          //   "ever_married": "yes",
-          //   "work_type": "private",
-          //   "Residence_type": "Urban",
-          //   "avg_glucose_level": 120,
-          //   "bmi": 53,
-          //   "smoking_status": "smokes"
-          // }
           );
       AnalysisAiModel analysisAiModel = AnalysisAiModel.fromJson(response.data);
       return Left(analysisAiModel);

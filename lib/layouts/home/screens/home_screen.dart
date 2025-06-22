@@ -62,14 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView(
         children: [
           SizedBox(height: height * 0.07),
-          Visibility(
-            visible: doctor == null,
-            child: CustomHomeButton(
-              title: "DOCTORS",
-              ontap: () {
-                Navigator.pushNamed(context, Routes.doctorScreenRouteName);
-              },
-            ),
+          CustomHomeButton(
+            title: "AWARENESS",
+            ontap: () {
+              Navigator.pushNamed(context, Routes.awarenessScreenRouteName,
+                  arguments: patient);
+            },
           ),
           SizedBox(height: height * 0.04),
           CustomHomeButton(
@@ -122,6 +120,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.pushNamed(
                     context, Routes.initPatientDateScreenRouteName,
                     arguments: patient);
+              },
+            ),
+          ),
+          SizedBox(height: height * 0.04),
+          Visibility(
+            visible: doctor == null,
+            child: CustomHomeButton(
+              title: "DOCTORS",
+              ontap: () {
+                Navigator.pushNamed(context, Routes.doctorScreenRouteName);
               },
             ),
           ),
