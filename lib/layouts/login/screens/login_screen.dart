@@ -45,10 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Routes.homeScreenRouteName,
-                    (route) => false,arguments: state.patientLoginModel
-                  );
+                      context, Routes.homeScreenRouteName, (route) => false,
+                      arguments: state.patientLoginModel);
                 },
               );
             } else if (state is PatientLoginViewModelErrorState) {
@@ -71,10 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Routes.homeScreenRouteName,
-                    (route) => false,arguments: state.doctorLoginModel
-                  );
+                      context, Routes.homeScreenRouteName, (route) => false,
+                      arguments: state.doctorLoginModel);
                 },
               );
             } else if (state is DoctorLoginViewModelErrorState) {
@@ -142,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: height * 0.03),
                     CustomTextField(
                       hintText: 'Password',
+                      obscureText: true,
                       keyboard: TextInputType.visiblePassword,
                       textController: passwordController,
                       validator: (value) => value!.length < 6

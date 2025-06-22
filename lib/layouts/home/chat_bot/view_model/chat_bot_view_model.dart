@@ -1,58 +1,44 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:injectable/injectable.dart';
+import 'package:doctors/data/data_source_contract/home/chatbot_data_source.dart';
+import 'package:doctors/data/models/home/chat_bot_model/chat_massege.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
-// import 'chat_bot_view_model_states.dart';
+import 'chat_bot_view_model_states.dart';
 
-// @injectable
-// class ChatBotViewModel extends Cubit<ChatBotViewModelStates> {
-//   final ChatBotDataSource chatBotDataSource;
+@injectable
+class ChatBotViewModel extends Cubit<ChatBotViewModelStates> {
+  final ChatbotDataSource chatbotDataSource;
 
-//   ChatBotViewModel(this.chatBotDataSource) : super(ChatBotInitialState());
+  ChatBotViewModel(this.chatbotDataSource) : super(ChatBotInitialState());
 
-//   final List<ChatMessage> messages = [];
+  final List<ChatMessage> messages = [];
 
-//   Future<void> sendMessage(String message) async {
-//     if (message.trim().isEmpty) return;
+  Future<void> sendMessage({required String message, required String token}) async {
+  if (message.trim().isEmpty) return;
 
-//     messages.add(ChatMessage(message: message, isUser: true));
-//     emit(ChatBotLoadingState());
+  messages.add(ChatMessage(message: message, isUser: true));
+  emit(ChatBotLoadingState(messages: List.from(messages)));
 
-//     final result = await chatBotDataSource.sendMessage(message: message);
+  final result = await chatbotDataSource.getChatbotResponse(message: message, token: token);
 
-//     result.fold(
-//       (failure) {
-//         debugPrint("ChatBot Error: ${failure.message}");
-//         emit(ChatBotErrorState(failure));
-//       },
-//       (response) {
-//         messages.add(ChatMessage(message: response.reply ?? "", isUser: false));
-//         emit(
-//           ChatBotSuccessState(
-//             response.reply ?? "",
-//             response.products ?? [],
-//             List.from(messages),
-//           ),
-//         );
-//       },
-//     );
-//   }
+  result.fold(
+    (chatBotModel) {
+      messages.add(ChatMessage(
+        message: chatBotModel.data?.botReply ?? "",
+        isUser: false,
+        botReply: chatBotModel.data?.botReply,
+      ));
+      emit(ChatBotSuccessState(chatBotModel, messages: List.from(messages)));
+    },
+    (error) {
+      emit(ChatBotErrorState(error, messages: List.from(messages)));
+    },
+  );
+}
 
-//   Future<void> initializeChat() async {
-//     resetConversation();
-//   }
 
-//   void resetConversation() {
-//     messages.clear();
-
-//     messages.add(
-//       ChatMessage(
-//         message:
-//             "Welcome! I'm here to help you with your shopping. Feel free to ask me anything!",
-//         isUser: false,
-//       ),
-//     );
-
-//     emit(ChatBotSuccessState("", [], List.from(messages)));
-//   }
-// }
+  void resetConversation() {
+    messages.clear();
+    emit(ChatBotInitialState(messages: List.from(messages)));
+  }
+}

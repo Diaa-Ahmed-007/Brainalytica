@@ -14,17 +14,17 @@ class ChatBotAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircleAvatar(
-            radius: 18,
-            backgroundColor: theme.colorScheme.primary.withAlpha(180),
-            child: Icon(
-              Icons.chat_bubble_outline,
-              color: theme.colorScheme.onPrimary,
-              size: 20,
-            ),
+          Icon(
+            Icons.chat,
+            color: theme.colorScheme.onPrimary,
+            size: 24,
           ),
           const SizedBox(width: 8),
-          Text("Shopping assistant"),
+          Text(
+            "Shopping assistant",
+            style: theme.textTheme.titleMedium
+                ?.copyWith(color: theme.colorScheme.onPrimary),
+          ),
         ],
       ),
     );

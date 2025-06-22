@@ -3,8 +3,12 @@ import 'dart:developer';
 import 'package:doctors/core/utils/routes.dart';
 import 'package:doctors/data/models/doctor_register_model/doctor_login_model.dart';
 import 'package:doctors/data/models/patient_login_model/patient_login_model.dart';
+import 'package:doctors/di/di.dart';
+import 'package:doctors/layouts/home/Choices/Emergancy/all_emergancy_screen.dart';
+import 'package:doctors/layouts/home/Choices/Emergancy/view_model/all_emergancy_view_model.dart';
 import 'package:doctors/layouts/home/widgets/custom_home_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,22 +73,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: height * 0.04),
           CustomHomeButton(
-            title: "AWARENESS",
-            ontap: () {
-              Navigator.pushNamed(context, Routes.awarenessScreenRouteName);
-            },
-          ),
-          SizedBox(height: height * 0.04),
-          CustomHomeButton(
             title: "EXERCISES",
             ontap: () {
               Navigator.pushNamed(context, Routes.exercisesScreenRouteName);
             },
-          ),
-          SizedBox(height: height * 0.04),
-          CustomHomeButton(
-            title: "ILLNESSES",
-            ontap: () {},
           ),
           Visibility(
               visible: patient == null, child: SizedBox(height: height * 0.04)),
@@ -98,13 +90,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SizedBox(height: height * 0.04),
-          CustomHomeButton(
-            title: "Emergancy",
-            ontap: () {
-              Navigator.pushNamed(context, Routes.emergeancyScreenRouteName,
-                  arguments: patient);
-            },
-          ),
+          patient == null
+              ? CustomHomeButton(
+                  title: "All Emergencies",
+                  ontap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (context) => getIt<AllEmergancyViewModel>()
+                              ..loadEmergencies(),
+                            child: const AllEmergencyScreen(),
+                          ),
+                        ));
+                  })
+              : CustomHomeButton(
+                  title: "Emergancy",
+                  ontap: () {
+                    Navigator.pushNamed(
+                        context, Routes.emergeancyScreenRouteName,
+                        arguments: patient);
+                  },
+                ),
           Visibility(
               visible: doctor == null, child: SizedBox(height: height * 0.04)),
           Visibility(
@@ -126,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.pushNamed(
             context,
             Routes.chatBotViewRouteName,
-            arguments:token,
+            arguments: token,
           );
         },
         shape: const CircleBorder(),

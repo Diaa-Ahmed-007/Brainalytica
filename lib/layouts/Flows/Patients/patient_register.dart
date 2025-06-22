@@ -7,6 +7,7 @@ import 'package:doctors/layouts/Flows/Patients/view_model/sign_up_view_model_sta
 import 'package:doctors/layouts/Flows/Patients/widgets/gender_choose.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PatientRegister extends StatefulWidget {
@@ -26,6 +27,32 @@ class _PatientRegisterState extends State<PatientRegister> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  // Date picker logic
+  Future<void> _pickBirthDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2000, 1, 1),
+      firstDate: DateTime(1950),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Theme.of(context).colorScheme.primary,
+              onPrimary: Colors.white,
+              onSurface: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      final formatted = DateFormat('yyyy-MM-dd').format(picked);
+      setState(() => ageController.text = formatted);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,14 +141,23 @@ class _PatientRegisterState extends State<PatientRegister> {
                         ],
                       ),
                       SizedBox(height: height),
-                      CustomTextField(
-                        hintText: "yyyy-mm-dd",
-                        keyboard: TextInputType.number,
-                        textController: ageController,
-                        validator: (value) =>
-                            value!.isEmpty ? "This field can't be empty" : null,
+
+                      // ========== Birth Date ==========
+                      GestureDetector(
+                        onTap: _pickBirthDate,
+                        child: AbsorbPointer(
+                          child: CustomTextField(
+                            hintText: "Birth Date (yyyy-mm-dd)",
+                            keyboard: TextInputType.datetime,
+                            textController: ageController,
+                            validator: (value) => value!.isEmpty
+                                ? "This field can't be empty"
+                                : null,
+                          ),
+                        ),
                       ),
                       SizedBox(height: height),
+
                       Row(
                         children: [
                           GenderChoose(),

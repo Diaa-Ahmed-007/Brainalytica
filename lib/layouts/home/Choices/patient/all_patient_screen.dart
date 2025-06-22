@@ -23,18 +23,32 @@ class AllPatientScreen extends StatelessWidget {
           } else if (state is AllPatientsViewModelSuccess) {
             return ListView.builder(
               padding: const EdgeInsets.only(bottom: 16),
-              itemCount: state.getAllPatientModel.data?.length,
+              itemCount: state.getAllPatientsAnalysisModel.data?.length ?? 0,
               itemBuilder: (context, index) {
-                final patient = state.getAllPatientModel.data?[index];
+                final result = state.getAllPatientsAnalysisModel.data![index];
+                final pred = result.strokePrediction;
+                final patient = pred?.patient;
+
                 return PatientCard(
-                  firstName: patient?.patient?.firstName ?? "Unknown",
-                  lastName: patient?.patient?.lastName ?? "Unknown",
-                  email: patient?.patient?.emailAddress ?? "Unknown",
-                  birthDate: patient?.patient?.birthDate ?? "Unknown",
-                  phoneNumber: patient?.patient?.phoneNumber ?? "Unknown",
-                  pharmaceutical: patient?.pharmaceutical ?? "Unknown",
-                  chronicDiseases: patient?.chronicDiseases ?? "Unknown",
-                  strokeInjuryDate: patient?.strokeInjuryDate ?? "Unknown",
+                  result: result.result ?? "Unknown",
+                  probability: (result.probability is int)
+                      ? (result.probability as int).toDouble()
+                      : result.probability?.toDouble(),
+                  createdAt: result.createdAt ?? "",
+                  firstName: patient?.firstName ?? "Unknown",
+                  lastName: patient?.lastName ?? "Unknown",
+                  email: patient?.emailAddress ?? "Unknown",
+                  birthDate: patient?.birthDate ?? "Unknown",
+                  phoneNumber: patient?.phoneNumber ?? "Unknown",
+                  age: pred?.age?.toInt(),
+                  gender: pred?.gender,
+                  hypertension: pred?.hypertension,
+                  heartDisease: pred?.heartDisease,
+                  workType: pred?.workType,
+                  residenceType: pred?.residenceType,
+                  avgGlucoseLevel: pred?.avgGlucoseLevel?.toDouble(),
+                  bmi: pred?.bmi?.toDouble(),
+                  smokingStatus: pred?.smokingStatus,
                 );
               },
             );

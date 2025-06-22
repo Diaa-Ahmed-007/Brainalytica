@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatBotInputField extends StatefulWidget {
-  const ChatBotInputField({super.key});
-
+  const ChatBotInputField({super.key, required this.token});
+  final String token;
   @override
   State<ChatBotInputField> createState() => _ChatBotInputFieldState();
 }
@@ -15,7 +15,9 @@ class _ChatBotInputFieldState extends State<ChatBotInputField> {
   void _sendMessage() {
     final text = _controller.text.trim();
     if (text.isNotEmpty) {
-      // context.read<ChatBotViewModel>().sendMessage(text);
+      context
+          .read<ChatBotViewModel>()
+          .sendMessage(message: text, token: widget.token);
       _controller.clear();
     }
   }
@@ -34,7 +36,8 @@ class _ChatBotInputFieldState extends State<ChatBotInputField> {
               onSubmitted: (_) => _sendMessage(),
               decoration: InputDecoration(
                 hintText: "Type a message.....",
-                hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+                hintStyle: theme.textTheme.bodyMedium
+                    ?.copyWith(color: theme.hintColor),
                 filled: true,
                 fillColor: theme.cardColor,
                 border: OutlineInputBorder(
@@ -68,13 +71,14 @@ class _ChatBotInputFieldState extends State<ChatBotInputField> {
             height: 42,
             width: 42,
             decoration: BoxDecoration(
-              color: theme.colorScheme.primary,
+              color: theme.colorScheme.onSecondary,
               shape: BoxShape.circle,
             ),
             child: IconButton(
-              icon: const Icon(Icons.send, size: 20, color: Colors.white),
+              icon:
+                  Icon(Icons.send, size: 20, color: theme.colorScheme.primary),
               onPressed: _sendMessage,
-              splashColor: theme.colorScheme.secondary.withAlpha(60),
+              splashColor: theme.colorScheme.onSecondary.withAlpha(60),
               tooltip: "Send",
             ),
           ),

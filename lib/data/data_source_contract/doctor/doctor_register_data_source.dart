@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:doctors/layouts/Flows/doctors/doctor_register.dart';
+import 'package:doctors/data/models/doctor_register_model/doctor_register_model.dart';
 
 abstract class DoctorRegisterDataSource {
-  Future<Either<DoctorRegister, String>> registerPatient(
+  Future<Either<DoctorRegisterModel, String>> registerPatient(
       {required String firstName,
       required String lastName,
       required String gender,

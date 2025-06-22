@@ -5,12 +5,14 @@ class ChatMessageBubble extends StatelessWidget {
   final String message;
   final bool isUser;
   final bool isLoading;
+  final String? botReply;
 
   const ChatMessageBubble({
     super.key,
     required this.message,
     required this.isUser,
     this.isLoading = false,
+    this.botReply,
   });
 
   @override
@@ -25,17 +27,50 @@ class ChatMessageBubble extends StatelessWidget {
     final Color userTextColor = theme.colorScheme.onPrimary;
     final Color assistantTextColor = theme.colorScheme.onSurface;
 
+    if (isLoading) {
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+          child: TypingIndicator(
+            brightColor: theme.colorScheme.primary,
+            darkColor: theme.disabledColor,
+          ),
+        ),
+      );
+    }
+
+    if (!isUser && botReply != null) {
+
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: Colors.green.shade50,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.green.shade200),
+          ),
+          child: Text(
+            botReply!,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Colors.black87,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      );
+    }
+
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
         decoration: BoxDecoration(
-          color: isUser
-              ? userBubble
-              : isLoading
-                  ? Colors.transparent
-                  : assistantBubble,
+          color: isUser ? userBubble : assistantBubble,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -45,18 +80,13 @@ class ChatMessageBubble extends StatelessWidget {
                 isUser ? const Radius.circular(0) : const Radius.circular(12),
           ),
         ),
-        child: isLoading
-            ? TypingIndicator(
-                brightColor: theme.colorScheme.primary,
-                darkColor: theme.disabledColor,
-              )
-            : Text(
-                message,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: isUser ? userTextColor : assistantTextColor,
-                  fontSize: 14,
-                ),
-              ),
+        child: Text(
+          message,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: isUser ? userTextColor : assistantTextColor,
+            fontSize: 14,
+          ),
+        ),
       ),
     );
   }

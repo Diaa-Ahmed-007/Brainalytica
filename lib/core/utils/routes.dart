@@ -3,12 +3,14 @@ import 'package:doctors/layouts/Flows/Patients/patient_register.dart';
 import 'package:doctors/layouts/Flows/Patients/provider/Patient_register_provider.dart';
 import 'package:doctors/layouts/Flows/Patients/view_model/sign_up_view_model.dart';
 import 'package:doctors/layouts/Flows/doctors/doctor_register.dart';
+import 'package:doctors/layouts/Flows/doctors/view_model/doctor_register_view_model.dart';
 import 'package:doctors/layouts/Flows/screens/flow_choose_screen.dart';
-import 'package:doctors/layouts/home/Choices/Awareness/awareness_screen.dart';
 import 'package:doctors/layouts/home/Choices/Doctors/doctors_screen.dart';
 import 'package:doctors/layouts/home/Choices/Doctors/view_model/all_doctors_view_model.dart';
+import 'package:doctors/layouts/home/Choices/Emergancy/all_emergancy_screen.dart';
 import 'package:doctors/layouts/home/Choices/Emergancy/emergancy_screen.dart';
 import 'package:doctors/layouts/home/Choices/Emergancy/view_model/add_emergancy_view_model.dart';
+import 'package:doctors/layouts/home/Choices/Emergancy/view_model/all_emergancy_view_model.dart';
 import 'package:doctors/layouts/home/Choices/Exercises/choises/hands_exercises_screen.dart';
 import 'package:doctors/layouts/home/Choices/Exercises/choises/leg_exercises_screen.dart';
 import 'package:doctors/layouts/home/Choices/Exercises/choises/lower_limb_exercises_screen.dart';
@@ -23,6 +25,7 @@ import 'package:doctors/layouts/home/Choices/add_data/view_model/add_patient_dat
 import 'package:doctors/layouts/home/Choices/patient/all_patient_screen.dart';
 import 'package:doctors/layouts/home/Choices/patient/view_model/all_patient_view_model.dart';
 import 'package:doctors/layouts/home/chat_bot/chat_bot_view.dart';
+import 'package:doctors/layouts/home/chat_bot/view_model/chat_bot_view_model.dart';
 import 'package:doctors/layouts/home/screens/home_screen.dart';
 import 'package:doctors/layouts/login/screens/login_screen.dart';
 import 'package:doctors/layouts/login/view_model/doctor_login_view_model.dart';
@@ -53,10 +56,12 @@ class Routes {
               create: (context) => PatientRegisterProvider(),
               child: const PatientRegister()),
         ),
-    doctorRegisterRouteName: (context) => const DoctorRegister(),
+    doctorRegisterRouteName: (context) => BlocProvider(
+          create: (context) => getIt<DoctorRegisterViewModel>(),
+          child: const DoctorRegister(),
+        ),
     homeScreenRouteName: (context) => const HomeScreen(),
     exercisesScreenRouteName: (context) => const ExeciesesScreen(),
-    awarenessScreenRouteName: (context) => const AwarenessScreen(),
     initPatientDateScreenRouteName: (context) => BlocProvider(
           create: (context) => getIt<AddPatientDataViewModel>(),
           child: const InitPatientDateScreen(),
@@ -90,7 +95,11 @@ class Routes {
     pronunciationAndSpeechExercisesScreenRouteName: (context) =>
         const PronunciationAndSpeechExercisesScreen(),
     legExercisesScreenRouteName: (context) => const LegExercisesScreen(),
-    chatBotViewRouteName: (_) => const ChatBotView(),
+    chatBotViewRouteName: (_) => BlocProvider(
+          create: (context) => getIt<ChatBotViewModel>(),
+          child: const ChatBotView(),
+        ),
+    
   };
 
 //------------------------------------------------------------------

@@ -25,13 +25,13 @@ class PatientRegisterDataSourceImpl extends PatientRegisterDataSource {
       var response = await apiManger.postBackEndRequest(
           endPoints: EndPoints.patientRegisterEndPoint,
           body: {
-            "First_Name": firstName,
-            "Last_Name": lastName,
-            "Gender": gender,
-            "Birth_Date": birthDate,
-            "Email_Address": emailAddress,
-            "Phone_Number": phoneNumber,
-            "Password": password
+            "first_Name": firstName,
+            "last_Name": lastName,
+            "gender": gender,
+            "birth_Date": birthDate,
+            "email_Address": emailAddress,
+            "phone_Number": phoneNumber,
+            "password": password
           });
       PatientModel patientRegisterResponse =
           PatientModel.fromJson(response.data);

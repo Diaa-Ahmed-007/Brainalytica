@@ -1,4 +1,4 @@
-import 'package:doctors/data/models/home/all_patient_model/GetAllPatientModel.dart';
+import 'package:doctors/data/models/home/patients_analysis/get_all_patients_analysis_model/GetAllPatientsAnalysisModel.dart';
 
 abstract class AllPatientsViewModelState {}
 
@@ -7,8 +7,8 @@ class AllPatientsViewModelInitial extends AllPatientsViewModelState {}
 class AllPatientsViewModelLoading extends AllPatientsViewModelState {}
 
 class AllPatientsViewModelSuccess extends AllPatientsViewModelState {
-  GetAllPatientModel getAllPatientModel;
-  AllPatientsViewModelSuccess(this.getAllPatientModel);
+  GetAllPatientsAnalysisModel getAllPatientsAnalysisModel;
+  AllPatientsViewModelSuccess(this.getAllPatientsAnalysisModel);
 }
 
 class AllPatientsViewModelError extends AllPatientsViewModelState {

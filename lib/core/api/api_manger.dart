@@ -17,18 +17,23 @@ class ApiManger {
 
   Future<Response> getBackEndRequest(
       {required String endPoints,
-      Map<String, dynamic>? queryParameters}) async {
+      Map<String, dynamic>? queryParameters,Map<String, dynamic>? header}) async {
     var response = await dioBackEnd.get(
       endPoints,
       queryParameters: queryParameters,
+      options: Options(
+        headers: {
+          "Content-Type": "application/json",
+        },
+      ),
     );
 
     return response;
   }
 
   Future<Response> postBackEndRequest(
-      {required String endPoints, Map<String, dynamic>? body}) async {
-    var response = await dioBackEnd.post(endPoints, data: body);
+      {required String endPoints, Map<String, dynamic>? body,Map<String, dynamic>? headers,}) async {
+    var response = await dioBackEnd.post(endPoints, data: body,options: Options(headers: headers),);
     return response;
   }
 

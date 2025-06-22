@@ -42,6 +42,32 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
     'O-'
   ];
 
+  // ✅ Validation Function
+  bool validateFields(BuildContext context) {
+    String? error;
+    if (weightController.text.isEmpty) {
+      error = 'Weight is required';
+    } else if (selectedBloodType == null) {
+      error = 'Blood Type is required';
+    } else if (pharmaceuticalController.text.isEmpty) {
+      error = 'Pharmaceutical field is required';
+    } else if (chronicDiseasesController.text.isEmpty) {
+      error = 'Chronic Diseases field is required';
+    } else if (hadStroke && strokeInjuryDate == null) {
+      error = 'Stroke injury date is required';
+    }
+    if (error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -126,6 +152,7 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                     ),
                     SizedBox(height: height * 0.05),
 
+                    // Had Stroke Switch
                     SwitchListTile(
                       title: Text(
                         "Had Stroke?",
@@ -149,8 +176,7 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                           width: 1.5,
                         ),
                       ),
-                      tileColor:
-                          Colors.white.withOpacity(0.1), // خلفية الـ tile
+                      tileColor: Colors.white.withOpacity(0.1),
                       title: Text(
                         strokeInjuryDate == null
                             ? 'Select Stroke Injury Date'
@@ -163,9 +189,7 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                       ),
                       trailing: Icon(
                         Icons.calendar_today,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimary, // لون الأيقونة
+                        color: Theme.of(context).colorScheme.onPrimary,
                       ),
                       onTap: () async {
                         final DateTime? picked = await showDatePicker(
@@ -193,7 +217,6 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                         }
                       },
                     ),
-
                     SizedBox(height: height * 0.02),
 
                     // Weight
@@ -224,19 +247,15 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                           setState(() => selectedBloodType = val),
                       icon: Icon(
                         Icons.arrow_drop_down,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSecondary, // لون السهم
+                        color: Theme.of(context).colorScheme.onSecondary,
                       ),
                       decoration: InputDecoration(
                         labelText: 'Blood Type',
                         labelStyle: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSecondary, // لون عنوان الحقل
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.1), // الخلفية
+                        fillColor: Colors.white.withOpacity(0.1),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Theme.of(context).colorScheme.primary,
@@ -265,7 +284,7 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                     ),
                     SizedBox(height: height * 0.04),
 
-                    // Blood Transfusion
+                    // Blood Transfusion Switch
                     SwitchListTile(
                       title: Text(
                         "Received Blood Transfusion?",
@@ -297,7 +316,7 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                     ),
                     SizedBox(height: height * 0.04),
 
-                    // Had Surgery
+                    // Had Surgery Switch
                     SwitchListTile(
                       title: Text(
                         "Had Surgery?",
@@ -315,9 +334,10 @@ class _InitPatientDateScreenState extends State<InitPatientDateScreen> {
                     // Submit
                     InkWell(
                       onTap: () {
+                        if (!validateFields(context)) return;
                         context.read<AddPatientDataViewModel>().addPatientData(
-                              weight:
-                                  double.parse(weightController.text) ?? 50.0,
+                              weight: double.tryParse(weightController.text) ??
+                                  50.0,
                               pharmaceutical: pharmaceuticalController.text,
                               chronicDiseases: chronicDiseasesController.text,
                               hadStroke: hadStroke,
